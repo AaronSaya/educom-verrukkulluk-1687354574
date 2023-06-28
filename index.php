@@ -6,6 +6,7 @@ require_once("lib/artikel.php");
 /// INIT
 $db = new database();
 $art = new artikel($db->getConnection());
+$gbr = new gebruiker($db->getConnection());
 
 
 /// VERWERK 

@@ -9,7 +9,8 @@ $art = new artikel($db->getConnection());
 
 
 /// VERWERK 
-$data = $art->selecteerArtikel(8);
+$data = $art->selecteerArtikel(34);
 
 /// RETURN
 var_dump($data);
+echo($data);

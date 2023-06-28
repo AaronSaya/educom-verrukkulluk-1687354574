@@ -1,6 +1,6 @@
 <?php 
 
-// Aanpassen naar je eigen omgeving
+
 define("USER", "root");
 define("PASSWORD", "Mozes29722@");
 define("DATABASE", "verrukkulluk");

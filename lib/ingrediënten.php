@@ -17,19 +17,24 @@
     
         public function selecteerIngrediënt($gerecht_id) {
 
-            $sql = "SELECT * FROM ingrediënten WHERE gerecht_id = $gerecht_id";
+            $sql = "select * FROM ingrediënten WHERE gerecht_id = $gerecht_id";
             $result = mysqli_query($this->connection, $sql);
-            $ingrediënten = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            //$ingrediënten = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            $return = [];
 
-            $artikelen = array();
-            foreach ($ingrediënten as $ingrediënt) {
-                array_push($artikelen, $this->getArtikel($ingrediënt['artikel_id']));
+            while ($ingrediënten = mysqli_fetch_array($result)) {
+                $artikel = $this->getArtikel($ingrediënten['artikel_id'], MYSQLI_ASSOC);
+
+                $return [] = [
+                    "id" => $ingrediënten['gerecht_id'],
+                    "gerecht_id" => $ingrediënten['gerecht_id'],
+                    "artikel_id" => $ingrediënten['artikel_id'],
+                    "hoeveelheid" => $ingrediënten['hoeveelheid'],
+                    "artikel" => $artikel
+
+                ];	
             }
-
-            $ingrediëntenArtikelen = array("ingrediënten"=>$ingrediënten, "artikelen"=>$artikelen);
-
-             return ($ingrediëntenArtikelen);
-        }
+                return $return;
 
         
     }

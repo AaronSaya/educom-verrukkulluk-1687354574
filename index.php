@@ -13,13 +13,15 @@ $art = new artikel($db->getConnection());
 $kt = new keukenType($db->getConnection());
 $ing = new ingrediënt($db->getConnection());
 $gi = new gerechtInfo($db->getConnection());
+$gbr = new gebruiker($db->getConnection());
 
 
 /// VERWERK 
 $dataArtikel = $art->selecteerArtikel(1);
 $dataKeukenType = $kt->selecteerKeukenType(1);
 $dataIngrediënt = $ing->selecteerIngrediënt(2);
-$dataGerechtInfo = $gi->selecteerGerechtInfo(1);
+$dataGerechtInfo = $gi->selecteerGerechtInfo(4);
+$dataGebruiker = $gbr->selecteerGebruiker(2);
 
 
 /// RETURN

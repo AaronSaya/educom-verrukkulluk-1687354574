@@ -11,6 +11,10 @@
             $this->artikel = new Artikel($connection);
         }
 
+        private function getArtikel($artikel_id) {
+            return($this->artikel->selecteerArtikel($artikel_id));
+        }
+    
         public function selecteerIngrediënt($gerecht_id) {
 
             $sql = "SELECT * FROM ingrediënten WHERE gerecht_id = $gerecht_id";
@@ -27,10 +31,7 @@
              return ($ingrediëntenArtikelen);
         }
 
-        private function getArtikel($artikel_id) {
-            return($this->artikel->selecteerArtikel($artikel_id));
-        }
-    
+        
     }
 
 

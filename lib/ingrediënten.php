@@ -1,26 +1,37 @@
 <?php
 
+
     class ingrediënt {
 
         private $connection;
+        private $artikel;
 
         public function __construct($connection) {
             $this->connection = $connection;
+            $this->artikel = new Artikel($connection);
         }
 
-        public function selecteerIngrediënt($ingrediënt_id, $artikel_id) {
+        public function selecteerIngrediënt($gerecht_id) {
 
-            $sql = "SELECT * FROM ingrediënten WHERE id = $ingrediënt_id and artikel_id = $artikel_id";
-
+            $sql = "SELECT * FROM ingrediënten WHERE gerecht_id = $gerecht_id";
             $result = mysqli_query($this->connection, $sql);
-            $ingrediënt = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            $ingrediënten = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-            return ($ingrediënt);
+            $artikelen = array();
+            foreach ($ingrediënten as $ingrediënt) {
+                array_push($artikelen, $this->getArtikel($ingrediënt['artikel_id']));
+            }
+
+            $ingrediëntenArtikelen = array("ingrediënten"=>$ingrediënten, "artikelen"=>$artikelen);
+
+             return ($ingrediëntenArtikelen);
         }
+
+        private function getArtikel($artikel_id) {
+            return($this->artikel->selecteerArtikel($artikel_id));
+        }
+    
     }
-
-
-
 
 
 ?>

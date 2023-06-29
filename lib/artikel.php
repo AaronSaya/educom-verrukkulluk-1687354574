@@ -3,9 +3,12 @@
 class artikel {
 
     private $connection;
+   
+   
 
     public function __construct($connection) {
         $this->connection = $connection;
+       
     }
   
     public function selecteerArtikel($artikel_id) {
@@ -19,5 +22,6 @@ class artikel {
 
     }
 
+    
 
 }

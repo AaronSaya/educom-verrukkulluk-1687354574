@@ -45,7 +45,7 @@ class gerechtInfo {
                 "gebruiker" => $gebruiker
             ];
         } elseif ($gerecht_info['record_type'] == "F") {
-            $opmerking = $gerecht_info['tekstveld'];
+            
 
             $return[] = [
                 "record_type" => $gerecht_info['record_type'],

@@ -28,6 +28,7 @@ class gerechtInfo {
             if ($gerecht_info['record_type'] == "B") {
                 
                 $bereidingswijze = $gerecht_info['tekstveld'];
+                
             $return[] = [
                 "record_type" => $gerecht_info['record_type'],
                 "datum" => $gerecht_info['datum'],

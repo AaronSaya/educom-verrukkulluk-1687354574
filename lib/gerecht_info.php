@@ -30,12 +30,38 @@ class gerechtInfo {
 
         $sql = "select * from gerecht_info where gerecht_id = $gerecht_id";
         $result = mysqli_query($this->connection, $sql);
-        
-        $return = [
-            'B' =>[],
-            'F' => [],
-            'O' =>[],
-            'W' => []
+        $gerechtInfo = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        return($this->sorteerGerechtInfo($gerechtInfo));
+    }
+       private function sorteerGerechtInfo($gerechtInfo) {
+        $sorteerInfo = [
+            'Bereidingswijze' =>[],
+            'Favoriet' => [],
+            'Opmerkingen' =>[],
+            'Waardering' => []
+        ];
+        foreach($gerechtInfo as $infoItem) {
+            if ($infoItem['record_type'] == 'B') {
+                array_push($sorteerInfo['Bereidingswijze'], $infoItem);
+            } elseif ($infoItem['record_type'] == 'F') {
+                $infoItem['gebruiker'] = $this->getGebruiker($infoItem['gebruiker_id']);
+                array_push($sorteerInfo['Favoriet'], $infoItem);
+            } elseif ($infoItem['record_type'] == 'O') {
+                $infoItem['gebruiker'] = $this->getGebruiker($infoItem['gebruiker_id']);
+                array_push($sorteerInfo['Opmerkingen'], $infoItem);
+            } elseif ($infoItem['record_type'] == 'W') {
+                array_push($sorteerInfo['Waardering'], $infoItem);
+            }
+
+        }
+        return($sorteerInfo);
+       } 
+        /*$return = [
+            'Bereidingswijze' =>[],
+            'Favoriet' => [],
+            'Opmerkingen' =>[],
+            'Waardering' => []
         ];
         
 
@@ -43,11 +69,10 @@ class gerechtInfo {
             $gebruiker = $this->getGebruiker($gerecht_info['gebruiker_id'], MYSQLI_ASSOC);
 
             if ($gerecht_info['record_type'] == "B") {
-                
                 $stap = $gerecht_info['tekstveld'];
                 
-            $return['B'][] = [
-                "record_type" => $gerecht_info['record_type'],
+            $return['Bereidingswijze'][] = [
+                "record_type" => $gerecht_info['record_type'],  	
                 "datum" => $gerecht_info['datum'],
                 "numeriekveld " => $gerecht_info['numeriekveld'],
                 "tekstveld " => $gerecht_info['tekstveld'],
@@ -55,7 +80,7 @@ class gerechtInfo {
         } elseif ($gerecht_info['record_type'] == "O") {
             $opmerking = $gerecht_info['tekstveld'];
 
-            $return['O'][] = [
+            $return['Opmerkingen'][] = [
                 "record_type" => $gerecht_info['record_type'],
                 "datum" => $gerecht_info['datum'],
                 "opmerking" => $opmerking,
@@ -64,7 +89,7 @@ class gerechtInfo {
         } elseif ($gerecht_info['record_type'] == "F") {
             
 
-            $return['F'][] = [
+            $return['Favoriet'][] = [
                 "record_type" => $gerecht_info['record_type'],
                 "datum" => $gerecht_info['datum'],
                 "gerecht_id" => $gerecht_info['gerecht_id'],
@@ -75,7 +100,7 @@ class gerechtInfo {
         elseif ($gerecht_info['record_type'] == "W") {
             $opmerking = $gerecht_info['tekstveld'];
 
-            $return['W'][] = [
+            $return['Waardering'][] = [
                 "record_type" => $gerecht_info['record_type'],
                 "gerecht_id" => $gerecht_info['gerecht_id'],
                 "gebruiker_id" => $gerecht_info['gebruiker_id'],
@@ -83,10 +108,10 @@ class gerechtInfo {
                 "numeriekveld " => $gerecht_info['numeriekveld'],
             ];
         }
-        }
-        return ($return);
+        } return $return*/
 
-    }
+
+    
 }
 
 ?>

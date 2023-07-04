@@ -62,7 +62,7 @@ class gerecht {
                 "lange_omschrijving " => $gerecht['lange_omschrijving'],
                 "keuken" => $keuken,
                 "type" => $type,
-                //"gebruiker" => $gebruiker,
+                "gebruiker" => $gebruiker,
                 "bereidingswijze" => $bereidingswijze,
                 "ingredient" => $ingredient,
             

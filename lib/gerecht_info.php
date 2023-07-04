@@ -14,22 +14,39 @@ class gerechtInfo {
         return ($this->gebruiker->selecteerGebruiker($gebruiker_id));
     }
 
+
+    public function addFavorite($gebruiker_id, $gerecht_id) {
+        $sql = "INSERT INTO favorieten (gebruiker_id, gerecht_id) VALUES ($gebruiker_id, $gerecht_id)";
+        mysqli_query($this->connection, $sql);
+    }
+    public function removeFavorite($gebruiker_id, $gerecht_id) {
+        $sql = "DELETE FROM favorieten WHERE gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";
+        mysqli_query($this->connection, $sql);
+    }
+
+
+
     public function selecteerGerechtInfo($gerecht_id) {
 
         $sql = "select * from gerecht_info where gerecht_id = $gerecht_id";
         $result = mysqli_query($this->connection, $sql);
-        //$gerecht_info = mysqli_fetch_array($result, MYSQLI_ASSOC);
         
-        $return = [];
+        $return = [
+            'B' =>[],
+            'F' => [],
+            'O' =>[],
+            'W' => []
+        ];
+        
 
         while ($gerecht_info = mysqli_fetch_array($result)) {
             $gebruiker = $this->getGebruiker($gerecht_info['gebruiker_id'], MYSQLI_ASSOC);
 
             if ($gerecht_info['record_type'] == "B") {
                 
-                $bereidingswijze = $gerecht_info['tekstveld'];
+                $stap = $gerecht_info['tekstveld'];
                 
-            $return[] = [
+            $return['B'][] = [
                 "record_type" => $gerecht_info['record_type'],
                 "datum" => $gerecht_info['datum'],
                 "numeriekveld " => $gerecht_info['numeriekveld'],
@@ -38,7 +55,7 @@ class gerechtInfo {
         } elseif ($gerecht_info['record_type'] == "O") {
             $opmerking = $gerecht_info['tekstveld'];
 
-            $return[] = [
+            $return['O'][] = [
                 "record_type" => $gerecht_info['record_type'],
                 "datum" => $gerecht_info['datum'],
                 "opmerking" => $opmerking,
@@ -47,7 +64,7 @@ class gerechtInfo {
         } elseif ($gerecht_info['record_type'] == "F") {
             
 
-            $return[] = [
+            $return['F'][] = [
                 "record_type" => $gerecht_info['record_type'],
                 "datum" => $gerecht_info['datum'],
                 "gerecht_id" => $gerecht_info['gerecht_id'],
@@ -58,7 +75,7 @@ class gerechtInfo {
         elseif ($gerecht_info['record_type'] == "W") {
             $opmerking = $gerecht_info['tekstveld'];
 
-            $return[] = [
+            $return['W'][] = [
                 "record_type" => $gerecht_info['record_type'],
                 "gerecht_id" => $gerecht_info['gerecht_id'],
                 "gebruiker_id" => $gerecht_info['gebruiker_id'],
@@ -67,7 +84,7 @@ class gerechtInfo {
             ];
         }
         }
-        return $return;
+        return ($return);
 
     }
 }

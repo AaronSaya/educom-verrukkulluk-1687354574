@@ -36,7 +36,7 @@ class gerecht {
         return($this->ingrediënten->selecteerIngrediënt($gerecht_id));
     }
 
-
+  
     
     public function selecteerGerecht($id) {
         $sql = "select * FROM gerecht WHERE id = $id";
@@ -52,7 +52,7 @@ class gerecht {
             $gerecht_id = $gerecht['id'];
             $bereidingswijze = $this->getBereidingswijze($gerecht_id);
             $ingredient = $this->getIngrediënt($gerecht_id); 
-           
+            
 
             $return[] = [
         
@@ -65,7 +65,7 @@ class gerecht {
                 //"gebruiker" => $gebruiker,
                 "bereidingswijze" => $bereidingswijze,
                 "ingredient" => $ingredient,
-               
+            
             ];
           
         }

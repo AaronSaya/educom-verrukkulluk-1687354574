@@ -38,13 +38,7 @@ class gerecht {
         return($this->ingrediënten->selecteerIngrediënt($gerecht_id));
     }
 
-    /*private function getArtikel($artikel_id) {
-        return($this->artikel->selecteerArtikel($artikel_id));
-    }*/
-
-    private function berekenPrijs($gerecht_id) {
-        
-    }
+  
     
     public function selecteerGerecht($id) {
         $sql = "select * FROM gerecht WHERE id = $id";

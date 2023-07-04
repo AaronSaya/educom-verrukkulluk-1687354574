@@ -31,61 +31,41 @@ class gerechtInfo {
         $sql = "select * from gerecht_info where gerecht_id = $gerecht_id";
         $result = mysqli_query($this->connection, $sql);
         
-        $return = [
-            'Bereidingswijze' =>[],
-            'Favoriet' => [],
-            'Opmerkingen' =>[],
-            'Waardering' => []
-        ];
-        
+        $return=[];
 
         while ($gerecht_info = mysqli_fetch_array($result)) {
+            
             $gebruiker = $this->getGebruiker($gerecht_info['gebruiker_id'], MYSQLI_ASSOC);
 
-            if ($gerecht_info['record_type'] == "B") {
-                
-                $stap = $gerecht_info['tekstveld'];
-                
-            $return['Bereidingswijze'][] = [
-                "record_type" => $gerecht_info['record_type'],
-                "datum" => $gerecht_info['datum'],
-                "numeriekveld " => $gerecht_info['numeriekveld'],
-                "tekstveld " => $gerecht_info['tekstveld'],
-            ];
-        } elseif ($gerecht_info['record_type'] == "O") {
-            $opmerking = $gerecht_info['tekstveld'];
-
-            $return['Opmerkingen'][] = [
-                "record_type" => $gerecht_info['record_type'],
-                "datum" => $gerecht_info['datum'],
-                "opmerking" => $opmerking,
-                "gebruiker" => $gebruiker
-            ];
-        } elseif ($gerecht_info['record_type'] == "F") {
             
 
-            $return['Favoriet'][] = [
-                "record_type" => $gerecht_info['record_type'],
-                "datum" => $gerecht_info['datum'],
-                "gerecht_id" => $gerecht_info['gerecht_id'],
-                "gebruiker_id" => $gerecht_info['gebruiker_id'],
-                "gebruiker" => $gebruiker
-            ];
-        }
-        elseif ($gerecht_info['record_type'] == "W") {
-            $opmerking = $gerecht_info['tekstveld'];
+            if ($gerecht_info['record_type'] == "O" or $gerecht_info['record_type'] == "F") {
+               
+                $return [] = [
+                    "id" => $gerecht_info["id"],
+                    "record_type" => $gerecht_info["record_type"],
+                    "gerecht_id" => $gerecht_info["gerecht_id"],
+                    "opmerkingen" => $gerecht_info["tekstveld"],
+                    "id" => $gebruiker["gebuiker_id"],
+                    "gebruikersnaam" => $gebruiker["gebruikersnaam"],
+                    "wachtwoord" => $gebruiker["wachtwoord"],
+                    "email" => $gebruiker["email"],
+                    "afbeelding" => $gebruiker["afbeelding"],
 
-            $return['Waardering'][] = [
-                "record_type" => $gerecht_info['record_type'],
-                "gerecht_id" => $gerecht_info['gerecht_id'],
-                "gebruiker_id" => $gerecht_info['gebruiker_id'],
-                "datum" => $gerecht_info['datum'],
-                "numeriekveld " => $gerecht_info['numeriekveld'],
-            ];
-        }
-        }
-        return ($return);
-
+                ];
+                    } 
+             else {
+                $return [] = [
+                    "id" => $gerecht_info["id"],
+                    "record_type" => $gerecht_info["record_type"],
+                    "gerecht_id" => $gerecht_info["gerecht_id"],
+                    "datum" => $gerecht_info["datum"],
+                    "bereidingswijze" => $gerecht_info["tekstveld"],
+                    "waardereing" => $gerecht_info["numeriekveld"],
+                ];   
+                      }
+            }
+            return ($return);
     }
 }
 

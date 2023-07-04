@@ -7,6 +7,7 @@ class gerecht {
     private $gebruiker;
     private $gerechtinfo;
     private $ingrediënten;
+    private $artikel;
     
 
     public function __construct($connection){
@@ -15,11 +16,12 @@ class gerecht {
         $this->gebruiker = new gebruiker($connection);
         $this->gerechtinfo = new gerechtInfo($connection);
         $this->ingrediënten = new ingrediënt($connection);
-        
+        $this->artikel = new artikel($connection);
+         
         
      }
 
-     private function getKeukenType( $keuken_id) {
+    private function getKeukenType( $keuken_id) {
         return($this->keukentype->selecteerKeukenType($keuken_id));
     }
 
@@ -36,7 +38,13 @@ class gerecht {
         return($this->ingrediënten->selecteerIngrediënt($gerecht_id));
     }
 
-  
+    /*private function getArtikel($artikel_id) {
+        return($this->artikel->selecteerArtikel($artikel_id));
+    }*/
+
+    private function berekenPrijs($gerecht_id) {
+        
+    }
     
     public function selecteerGerecht($id) {
         $sql = "select * FROM gerecht WHERE id = $id";
@@ -65,6 +73,7 @@ class gerecht {
                 "gebruiker" => $gebruiker,
                 "bereidingswijze" => $bereidingswijze,
                 "ingredient" => $ingredient,
+                
             
             ];
           

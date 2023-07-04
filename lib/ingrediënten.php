@@ -22,18 +22,30 @@
             //$ingrediënten = mysqli_fetch_all($result, MYSQLI_ASSOC);
             $return = [];
 
-            while ($ingrediënten = mysqli_fetch_array($result)) {
-                $artikel = $this->getArtikel($ingrediënten['artikel_id'], MYSQLI_ASSOC);
+            while ($ingredienten = mysqli_fetch_array($result)) {
+                    $artikel_id = $ingredienten['artikel_id'];
+                   // $artikel = $this->getArtikel($artikel_id, MYSQLI_ASSOC);
+
+                $artikel = $this->getArtikel($ingredienten['artikel_id'], MYSQLI_ASSOC);
 
                 $return [] = [
-                    "id" => $ingrediënten['gerecht_id'],
-                    "gerecht_id" => $ingrediënten['gerecht_id'],
-                    "artikel_id" => $ingrediënten['artikel_id'],
-                    "hoeveelheid" => $ingrediënten['hoeveelheid'],
-                    "artikel" => $artikel
+                    "id" => $ingredienten['gerecht_id'],
+                    "gerecht_id" => $ingredienten['gerecht_id'],
+                    "artikel_id" => $ingredienten['artikel_id'],
+                    "hoeveelheid" => $ingredienten['hoeveelheid'],
+                    "naam_artikel" => $artikel['naam_artikel'],
+                    "omschrijving" => $artikel["omschrijving"],
+                    "prijs" => $artikel["prijs"],
+                    "eenheid" => $artikel["eenheid"],
+                    "hoeveelheid_verpakking" => $artikel["hoeveelheid_verpakking"],
 
-                ];	
+                ];
+               
+
+               
             }
+
+        
                 return $return;
         }
     }

@@ -30,34 +30,8 @@ class gerechtInfo {
 
         $sql = "select * from gerecht_info where gerecht_id = $gerecht_id";
         $result = mysqli_query($this->connection, $sql);
-        $gerechtInfo = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-        return($this->sorteerGerechtInfo($gerechtInfo));
-    }
-       private function sorteerGerechtInfo($gerechtInfo) {
-        $sorteerInfo = [
-            'Bereidingswijze' =>[],
-            'Favoriet' => [],
-            'Opmerkingen' =>[],
-            'Waardering' => []
-        ];
-        foreach($gerechtInfo as $infoItem) {
-            if ($infoItem['record_type'] == 'B') {
-                array_push($sorteerInfo['Bereidingswijze'], $infoItem);
-            } elseif ($infoItem['record_type'] == 'F') {
-                $infoItem['gebruiker'] = $this->getGebruiker($infoItem['gebruiker_id']);
-                array_push($sorteerInfo['Favoriet'], $infoItem);
-            } elseif ($infoItem['record_type'] == 'O') {
-                $infoItem['gebruiker'] = $this->getGebruiker($infoItem['gebruiker_id']);
-                array_push($sorteerInfo['Opmerkingen'], $infoItem);
-            } elseif ($infoItem['record_type'] == 'W') {
-                array_push($sorteerInfo['Waardering'], $infoItem);
-            }
-
-        }
-        return($sorteerInfo);
-       } 
-        /*$return = [
+        
+        $return = [
             'Bereidingswijze' =>[],
             'Favoriet' => [],
             'Opmerkingen' =>[],
@@ -69,10 +43,11 @@ class gerechtInfo {
             $gebruiker = $this->getGebruiker($gerecht_info['gebruiker_id'], MYSQLI_ASSOC);
 
             if ($gerecht_info['record_type'] == "B") {
+                
                 $stap = $gerecht_info['tekstveld'];
                 
             $return['Bereidingswijze'][] = [
-                "record_type" => $gerecht_info['record_type'],  	
+                "record_type" => $gerecht_info['record_type'],
                 "datum" => $gerecht_info['datum'],
                 "numeriekveld " => $gerecht_info['numeriekveld'],
                 "tekstveld " => $gerecht_info['tekstveld'],
@@ -108,10 +83,10 @@ class gerechtInfo {
                 "numeriekveld " => $gerecht_info['numeriekveld'],
             ];
         }
-        } return $return*/
+        }
+        return ($return);
 
-
-    
+    }
 }
 
 ?>

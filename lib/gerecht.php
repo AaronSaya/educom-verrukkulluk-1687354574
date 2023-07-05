@@ -7,7 +7,7 @@ class gerecht {
     private $gebruiker;
     private $gerechtinfo;
     private $ingrediënten;
-    private $artikel;
+    
     
 
     public function __construct($connection){
@@ -16,7 +16,7 @@ class gerecht {
         $this->gebruiker = new gebruiker($connection);
         $this->gerechtinfo = new gerechtInfo($connection);
         $this->ingrediënten = new ingrediënt($connection);
-        $this->artikel = new artikel($connection);
+       
          
         
      }
@@ -29,8 +29,8 @@ class gerecht {
         return ($this->gebruiker->selecteerGebruiker($gebruiker_id));
     }
 
-    private function getBereidingswijze($gerecht_id) {
-        return($this->gerechtinfo->selecteerGerechtInfo($gerecht_id));
+    private function getGerechtInfo($gerecht_id,$recordType) {
+        return($this->gerechtinfo->selecteerGerechtInfo($gerecht_id, $recordType));
     }
    
 
@@ -38,8 +38,8 @@ class gerecht {
         return($this->ingrediënten->selecteerIngrediënt($gerecht_id));
     }
 
+
   
-    
     public function selecteerGerecht($id) {
         $sql = "select * FROM gerecht WHERE id = $id";
         $result = mysqli_query($this->connection, $sql);
@@ -52,31 +52,33 @@ class gerecht {
             $gebruiker = $this->getGebruiker($gerecht['gebruiker_id'], MYSQLI_ASSOC);
          
             $gerecht_id = $gerecht['id'];
-            $bereidingswijze = $this->getBereidingswijze($gerecht_id);
+            $bereidingswijze = $this->getGerechtInfo($gerecht_id,"B");
+            $favoriet = $this->getGerechtInfo($gerecht_id, "F");
+            $opmerkingen = $this->getGerechtInfo($gerecht_id, "O");
+            $waardering = $this->getGerechtInfo($gerecht_id, "W");
             $ingredient = $this->getIngrediënt($gerecht_id); 
             
 
             $return[] = [
-        
-                "datum_toegevoegd" => $gerecht['datum_toegevoegd'],
-                "titel " => $gerecht['titel'],
-                "korte_omschrijving " => $gerecht['korte_omschrijving'],
-                "lange_omschrijving " => $gerecht['lange_omschrijving'],
+                
+                "gerecht" => $gerecht,
                 "keuken" => $keuken,
                 "type" => $type,
                 "gebruiker" => $gebruiker,
-                "bereidingswijze" => $bereidingswijze,
+                "bereidingsijze" => $bereidingswijze,
+                "favoriet" => $favoriet,
+                "opmerkingen" => $opmerkingen,
+                "waardering" => $waardering,
                 "ingredient" => $ingredient,
                 
             
             ];
           
         }
-    
        
         return ($return);
-    
-
     }
+
+    
     }
 ?>

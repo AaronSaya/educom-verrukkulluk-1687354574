@@ -23,7 +23,7 @@
             $return = [];
 
             while ($ingredienten = mysqli_fetch_array($result)) {
-                  // $artikel_id = $ingredienten['artikel_id'];
+                  
                    
 
                 $artikel = $this->getArtikel($ingredienten['artikel_id'], MYSQLI_ASSOC);
@@ -38,6 +38,7 @@
                     "prijs" => $artikel["prijs"],
                     "eenheid" => $artikel["eenheid"],
                     "hoeveelheid_verpakking" => $artikel["hoeveelheid_verpakking"],
+                    "calorie" => $artikel["calorie"],
 
                 ];
                

@@ -22,12 +22,12 @@ $grt = new gerecht($db->getConnection());
 $dataArtikel = $art->selecteerArtikel(1);
 $dataKeukenType = $kt->selecteerKeukenType(1);
 $dataIngrediënt = $ing->selecteerIngrediënt(2);
-$dataGerechtInfo = $gi->selecteerGerechtInfo(2);
+$dataGerechtInfo = $gi->selecteerGerechtInfo(2, 'record_type');
 $dataGebruiker = $gbr->selecteerGebruiker(2);
-$dataGerecht = $grt->selecteerGerecht(2);
+$dataGerecht = $grt->selecteerGerecht(1);
 
 
 /// RETURN
 print '<pre>';
-print_r($dataGerecht);
+print_r($dataIngrediënt);
 print '</pre>';

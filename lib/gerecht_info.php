@@ -46,7 +46,8 @@ class gerechtInfo {
                     "record_type" => $gerechtInfo["record_type"],
                     "gerecht_id" => $gerechtInfo["gerecht_id"],
                     "opmerkingen" => $gerechtInfo["tekstveld"],
-                    "id" => $gebruiker["id"],
+                    "datum" => $gerechtInfo["datum"],
+                    "gebruikerId" => $gebruiker["id"],
                     "gebruikersnaam" => $gebruiker["gebruikersnaam"],
                     "wachtwoord" => $gebruiker["wachtwoord"],
                     "email" => $gebruiker["email"],
@@ -54,7 +55,7 @@ class gerechtInfo {
 
                 ];}
                     
-             elseif ($gerechtInfo['record_type'] == 'W') {
+            /* elseif ($gerechtInfo['record_type'] == 'W') {
                $return [] = [
                     "id" => $gerechtInfo["id"],
                     "record_type" => $gerechtInfo["record_type"],
@@ -62,16 +63,16 @@ class gerechtInfo {
                     "datum" => $gerechtInfo["datum"],
                     "waardering" => $gerechtInfo["numeriekveld"],
                    
-            ];}
+            ];}*/
 
-            elseif  ($gerechtInfo['record_type'] == 'B'){
+            else {
                 $return [] = [
                      "id" => $gerechtInfo["id"],
                      "record_type" => $gerechtInfo["record_type"],
                      "gerecht_id" => $gerechtInfo["gerecht_id"],
                      "datum" => $gerechtInfo["datum"],
-                     "bereidingswijze" => $gerechtInfo["tekstveld"],
-                     "stap" => $gerechtInfo["numeriekveld"],
+                     "tekstveld" => $gerechtInfo["tekstveld"],
+                     "numeriekveld" => $gerechtInfo["numeriekveld"],
                 ];}
                       
             }

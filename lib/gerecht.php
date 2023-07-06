@@ -7,7 +7,7 @@ class gerecht {
     private $gebruiker;
     private $gerechtinfo;
     private $ingrediënten;
-    
+    private $artikel;
     
 
     public function __construct($connection){
@@ -16,7 +16,7 @@ class gerecht {
         $this->gebruiker = new gebruiker($connection);
         $this->gerechtinfo = new gerechtInfo($connection);
         $this->ingrediënten = new ingrediënt($connection);
-       
+        $this->artikel = new artikel($connection);
          
         
      }
@@ -39,25 +39,55 @@ class gerecht {
     }
 
 
+    private function totaalPrijs($ingredienten){
+        $totaal=0;
+        foreach($ingredienten as $ingredient){ 
+            $totaal += (int)ceil($ingredient['hoeveelheid'] / $ingredient['hoeveelheid_verpakking']) * $ingredient['prijs'];
+        }
+        return number_format($totaal,2);
+    }
+
+    private function totaalCalorie($ingredienten){
+        $totaal=0;
+        foreach($ingredienten as $ingredient){
+            $totaal += $ingredient['calorie'] / ($ingredient['hoeveelheid_verpakking']) * $ingredient['hoeveelheid'];
+            
+        }
+        return intval($totaal);
+    }
+
+    private function bepaalFavoriet($favorieten, $gerecht){
+        foreach($favorieten as $favoriet){
+           if($favoriet["id"] == $gerecht["id"] and $favoriet["gebruikerId"] == $gerecht["gebruiker_id"]){
+            
+            return true;
+           }
+           
+        }
+    }
   
     public function selecteerGerecht($id) {
         $sql = "select * FROM gerecht WHERE id = $id";
         $result = mysqli_query($this->connection, $sql);
+        $gerecht = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
         $return =[];
 
-        while ($gerecht = mysqli_fetch_array($result)){
-            $keuken = $this->getKeukenType($gerecht['keuken_id'], MYSQLI_ASSOC);
-            $type = $this->getKeukenType($gerecht['type_id'], MYSQLI_ASSOC);
-            $gebruiker = $this->getGebruiker($gerecht['gebruiker_id'], MYSQLI_ASSOC);
+           
+            $keuken = $this->getKeukenType($gerecht['keuken_id']);
+            $type = $this->getKeukenType($gerecht['type_id']);
+            $gebruiker = $this->getGebruiker($gerecht['gebruiker_id']);
          
-            $gerecht_id = $gerecht['id'];
-            $bereidingswijze = $this->getGerechtInfo($gerecht_id,"B");
-            $favoriet = $this->getGerechtInfo($gerecht_id, "F");
-            $opmerkingen = $this->getGerechtInfo($gerecht_id, "O");
-            $waardering = $this->getGerechtInfo($gerecht_id, "W");
-            $ingredient = $this->getIngrediënt($gerecht_id); 
-            
+            $gerechtId = $gerecht['id'];
+            $bereidingswijze = $this->getGerechtInfo($gerechtId,"B");
+            $favorieten = $this->getGerechtInfo($gerechtId, "F");
+            $opmerkingen = $this->getGerechtInfo($gerechtId, "O");
+            $waardering = $this->getGerechtInfo($gerechtId, "W");
+            $ingredienten = $this->getIngrediënt($gerechtId); 
+            $totaalPrijs = $this->totaalPrijs($ingredienten);
+            $totaalCalories = $this->totaalCalorie($ingredienten);
+            $bepaalFavoriet = $this->bepaalFavoriet($favorieten, $gerecht);
+           
 
             $return[] = [
                 
@@ -65,20 +95,29 @@ class gerecht {
                 "keuken" => $keuken,
                 "type" => $type,
                 "gebruiker" => $gebruiker,
-                "bereidingsijze" => $bereidingswijze,
-                "favoriet" => $favoriet,
+                "bereidingswijze" => $bereidingswijze,
+                "favoriet" => $favorieten,
                 "opmerkingen" => $opmerkingen,
                 "waardering" => $waardering,
-                "ingredient" => $ingredient,
+                "ingredient" => $ingredienten,
+                "totaalprijs" => $totaalPrijs,
+                "totaalcalories" => $totaalCalories,
+                "bepaalFavoriet" => $bepaalFavoriet,
                 
             
             ];
           
-        }
+        
        
         return ($return);
     }
+         
+}
+
+   
 
     
-    }
+
+    
+
 ?>

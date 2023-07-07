@@ -56,6 +56,16 @@ class gerecht {
         return intval($totaal);
     }
 
+        private function berekenWaardering($waarderingen){
+            $aantalWaardering = count($waarderingen);
+           
+           $nummerWaardering = 0;
+           foreach($waarderingen as $waardering) {
+            $nummerWaardering += $waardering["numeriekveld"];
+           }
+           $gemiddeldWaardering = $nummerWaardering / $aantalWaardering;
+           return $gemiddeldWaardering;
+        }
 
     private function bepaalFavoriet($favorieten, $gerecht){
         foreach($favorieten as $favoriet){
@@ -67,7 +77,13 @@ class gerecht {
         }
     }
   
-    public function selecteerGerecht($id) {
+    public function selecteerGerecht($id = null) {
+        if($id == 0) {
+            $sql = "select * FROM gerecht";
+        $result = mysqli_query($this->connection, $sql);
+        $gerecht = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        return $gerecht;
+        } else{
         $sql = "select * FROM gerecht WHERE id = $id";
         $result = mysqli_query($this->connection, $sql);
         $gerecht = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -88,6 +104,7 @@ class gerecht {
             $totaalPrijs = $this->totaalPrijs($ingredienten);
             $totaalCalories = $this->totaalCalorie($ingredienten);
             $bepaalFavoriet = $this->bepaalFavoriet($favorieten, $gerecht);
+            $berekenWaardering = $this->berekenWaardering($waarderingen);
            
 
             $return[] = [
@@ -104,12 +121,13 @@ class gerecht {
                 "totaalprijs" => $totaalPrijs,
                 "totaalcalories" => $totaalCalories,
                 "bepaalFavoriet" => $bepaalFavoriet,
+                 "berekenWaardering" => $berekenWaardering,
                 
             
             ];
           
         
-       
+        }
         return ($return);
     }
          

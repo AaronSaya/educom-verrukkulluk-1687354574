@@ -77,38 +77,39 @@ class gerecht {
         }
     }
   
-    public function selecteerGerecht($id = null) {
-        if($id == 0) {
-            $sql = "select * FROM gerecht";
+    public function selecteerGerecht($ids = null) {
+        $sql = "SELECT * FROM gerecht";
+        
+        if ($ids !== null) {
+            if (is_array($ids)) {
+                $ids = implode(',', $ids);
+            }
+            $sql .= " WHERE id IN ($ids)";
+        }
+        
         $result = mysqli_query($this->connection, $sql);
-        $gerecht = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        return $gerecht;
-        } else{
-        $sql = "select * FROM gerecht WHERE id = $id";
-        $result = mysqli_query($this->connection, $sql);
-        $gerecht = mysqli_fetch_array($result, MYSQLI_ASSOC);
-
-        $return =[];
-
-           
+        $gerechten = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        
+        $return = [];
+    
+        foreach ($gerechten as $gerecht) {
             $keuken = $this->getKeukenType($gerecht['keuken_id']);
             $type = $this->getKeukenType($gerecht['type_id']);
             $gebruiker = $this->getGebruiker($gerecht['gebruiker_id']);
-         
+    
             $gerechtId = $gerecht['id'];
-            $bereidingswijze = $this->getGerechtInfo($gerechtId,"B");
+    
+            $bereidingswijze = $this->getGerechtInfo($gerechtId, "B");
             $favorieten = $this->getGerechtInfo($gerechtId, "F");
             $opmerkingen = $this->getGerechtInfo($gerechtId, "O");
             $waarderingen = $this->getGerechtInfo($gerechtId, "W");
-            $ingredienten = $this->getIngrediënt($gerechtId); 
+            $ingredienten = $this->getIngrediënt($gerechtId);
             $totaalPrijs = $this->totaalPrijs($ingredienten);
             $totaalCalories = $this->totaalCalorie($ingredienten);
             $bepaalFavoriet = $this->bepaalFavoriet($favorieten, $gerecht);
             $berekenWaardering = $this->berekenWaardering($waarderingen);
-           
-
+    
             $return[] = [
-                
                 "gerecht" => $gerecht,
                 "keuken" => $keuken,
                 "type" => $type,
@@ -121,15 +122,13 @@ class gerecht {
                 "totaalprijs" => $totaalPrijs,
                 "totaalcalories" => $totaalCalories,
                 "bepaalFavoriet" => $bepaalFavoriet,
-                 "berekenWaardering" => $berekenWaardering,
-                
-            
+                "berekenWaardering" => $berekenWaardering,
             ];
-          
-        
         }
-        return ($return);
+    
+        return $return;
     }
+    
          
 }
 

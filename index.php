@@ -24,7 +24,7 @@ $dataKeukenType = $kt->selecteerKeukenType(1);
 $dataIngrediënt = $ing->selecteerIngrediënt(2);
 $dataGerechtInfo = $gi->selecteerGerechtInfo(2,"B");
 $dataGebruiker = $gbr->selecteerGebruiker(2);
-$dataGerecht = $grt->selecteerGerecht(4);
+$dataGerecht = $grt->selecteerGerecht(2);
 
 
 /// RETURN

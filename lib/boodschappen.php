@@ -70,9 +70,9 @@ public function addBoodschappen($gerecht_id, $gebruiker_id){
       
       foreach($ingredienten as $ingredient) {      
 
-        $preLijst = $this->artikelOpLijst($ingredient["artikel_id"], $gebruiker_id);
+        
 
-        if($preLijst["artikel_id"] == $ingredient["artikel_id"]) {
+        if($preLijst = $this->artikelOpLijst($ingredient["artikel_id"], $gebruiker_id)){
             $boodschappenlijst[] = [
                  "hoeveelheidVerpakking" => $preLijst["hoeveelheid_verpakking"] + $ingredient["hoeveelheid_verpakking"],
                  "prijs" => $preLijst["prijs"] + $ingredient["prijs"],

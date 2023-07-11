@@ -52,7 +52,7 @@ public function addBoodschappen($gerecht_id, $gebruiker_id){
     }
 
     foreach ($toevoegenBoodschappen as $boodschap) {
-        $sql = "INSERT INTO `boodschappen` (`gebruiker_id`, `artikel_id`, `aantal`) 
+        $sql = "INSERT INTO 'boodschappen' ('gebruiker_id', 'artikel_id', 'aantal') 
                 VALUES ($gebruiker_id, $boodschap[artikel_id], $boodschap[aantal]);";
         $this->connection->query($sql);
     }

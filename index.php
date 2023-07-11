@@ -27,7 +27,7 @@ $dataIngrediënt = $ing->selecteerIngrediënt(2);
 $dataGerechtInfo = $gi->selecteerGerechtInfo(2,"B");
 $dataGebruiker = $gbr->selecteerGebruiker(2);
 $dataGerecht = $grt->selecteerGerecht();
-$dataBoodschappen = $bsn->selecteerBoodschappen(2);
+$dataBoodschappen = $bsn->selecteerBoodschappen(4);
 
 
 /// RETURN

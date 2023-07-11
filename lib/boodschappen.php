@@ -81,7 +81,7 @@ public function addBoodschappen($gerecht_id, $gebruiker_id){
         } else {
             $boodschappenlijst[] = [
 
-              //"artikelId" => $ingredient["artikel_id"],
+              "artikelId" => $ingredient["artikel_id"],
               "naamArtikel" => $ingredient["naam_artikel"],
               "prijs" =>$ingredient["prijs"],
               "calorieVerpakking" => $ingredient["calorie"],

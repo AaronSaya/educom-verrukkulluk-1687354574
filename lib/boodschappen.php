@@ -21,40 +21,13 @@ private function getGebruiker($gebruiker_id){
 }
 
 
-    public function selecteerBoodschappen($id = null) {
-        $sql = "SELECT * FROM gerecht";
-        
-        if ($id !== null) {
-            $sql .= " WHERE id = $id";
-        }
-        
+    public function selecteerBoodschappen($gebruiker_id) {
+       
+        $sql = "SELECT * FROM boodschappenlijst WHERE gebruiker_id = $gebruiker_id";
         $result = mysqli_query($this->connection, $sql);
-        $gerechten = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $boodschappen = mysqli_fetch_all($result, MYSQLI_ASSOC);
         
-        $return = [];
-    
-        foreach ($gerechten as $gerecht) {
-            
-            $gebruiker = $this->getGebruiker($gerecht['gebruiker_id']);
-            $ingredienten = $this->getIngrediënt($gerecht['id']);
-
-            foreach ($ingredienten as $ingredient){
-            $return[] = [
-     
-              "gebruiker_id" => $gebruiker['id'],
-              "gerechtId" => $ingredient['gerecht_id'],
-              "artikelId" => $ingredient["artikel_id"],
-              "naamArtikel" => $ingredient["naam_artikel"],
-              "hoeveelheidGerecht" => $ingredient["hoeveelheid"],
-              "prijs" =>$ingredient["prijs"],
-              "calorieVerpakking" => $ingredient["calorie"],
-              "hoeveeleidVerpakking" => $ingredient["hoeveelheid_verpakking"],
-          
-          ];
-        }
-        }
-    
-        return $return;
+        return $boodschappen;
     }
     
 
@@ -62,41 +35,49 @@ public function addBoodschappen($gerecht_id, $gebruiker_id){
     
       $ingredienten = $this->getIngrediënt($gerecht_id);
 
-      $boodschappenlijst =[];
+      $bijwerkenBoodschappen = [];
+      $toevoegenBoodschappen =[];
             
       foreach($ingredienten as $ingredient) {      
-
-        if($preLijst = $this->artikelOpLijst($ingredient["artikel_id"], $gebruiker_id)){
-            $boodschappenlijst[] = [
-                 "hoeveelheidVerpakking" => $preLijst["hoeveelheid_verpakking"] + $ingredient["hoeveelheid_verpakking"],
-                 "prijs" => $preLijst["prijs"] + $ingredient["prijs"],
-                 "calorieVerpakking" => $preLijst["calorie"] + $ingredient["calorie"],
-                 ]; 
+        if($boodschap = $this->artikelOpLijst($ingredient["artikel_id"], $gebruiker_id)) {
+            $bijwerkenBoodschappen = [
+                "id" => $boodschap["id"],
+                "aantal" => $boodschap["aantal"] + $ingredient["aantal"],
+            ];
         } else {
-            $boodschappenlijst[] = [
-
-              "artikelId" => $ingredient["artikel_id"],
-              "naamArtikel" => $ingredient["naam_artikel"],
-              "prijs" =>$ingredient["prijs"],
-              "calorieVerpakking" => $ingredient["calorie"],
-              "hoeveeleidVerpakking" => $ingredient["hoeveelheid_verpakking"],
-                 
+            $toevoegenBoodschappen [] = [
+                "artikel_id" => $ingredienten["artikel_id"],
+                "aantal" => $ingredienten["aantal"],
             ];
         }
-      
-      } 
-        return $boodschappenlijst;
+       
+      }
+    foreach($bijwerkenBoodschappen as $boodschap) {
+        $query = "UPDATE boodschappen SET aantal = $boodschap[aantal] WHERE id = $boodschap[id];";
+        $this->connection->query($query);
     }
- 
-public function artikelOpLijst($artikel_id, $gebruiker_id){
+
+    foreach ($toevoegenBoodschappen as $boodschap) {
+        $sql = "INSERT INTO `boodschappen` (`gebruiker_id`, `artikel_id`, `aantal`) 
+                VALUES ($gebruiker_id, $boodschap[artikel_id], $boodschap[aantal]);";
+        $this->connection->query($sql);
+    }
+
+    echo "<pre>";print_r($bijwerkenBoodschappen);echo "</pre>";
+    echo "<pre>";print_r($toevoegenBoodschappen);echo "</pre>";
+ } 
+
+
+    public function artikelOpLijst($artikel_id, $gebruiker_id) {
 
        $boodschappen = $this->selecteerBoodschappen($gebruiker_id);
-       while ($boodschappen["artikel_id"] == $artikel_id) {
-        return $boodschappen;
+
+       foreach($boodschappen as $boodschap) {
+        if($boodschap["artikel_id"] == $artikel_id) {
+            return $boodschap;
+        }
        }
-
        return false;
-    }   
+  }
 }
-
 ?>

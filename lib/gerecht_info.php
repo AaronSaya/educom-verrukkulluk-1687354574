@@ -17,7 +17,7 @@ class gerechtInfo {
 
     public function addFavorite($gebruiker_id, $gerecht_id) {
         $sql = "INSERT INTO favorieten (gebruiker_id, gerecht_id) VALUES ($gebruiker_id, $gerecht_id)";
-        mysqli_query($this->connection, $sql);
+        mysqli_query($this->connection, $sql); 
     }
     public function removeFavorite($gebruiker_id, $gerecht_id) {
         $sql = "DELETE FROM favorieten WHERE gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";

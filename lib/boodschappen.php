@@ -4,20 +4,16 @@ class Boodschappen {
 
 private $connection;
 private $ingrediënten;
-private $gebruiker;
+
 
 public function __construct($connection){
     $this->connection =  $connection;
     $this->ingrediënten = new ingrediënt($connection);
-    $this->gebruiker = new gebruiker($connection);
 }
 
 private function getIngrediënt($gerecht_id) {
     return($this->ingrediënten->selecteerIngrediënt($gerecht_id));
 }
-
-
-
 
     public function selecteerBoodschappen($gebruiker_id) {
        

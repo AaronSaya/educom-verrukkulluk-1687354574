@@ -57,8 +57,6 @@ public function addBoodschappen($gerecht_id, $gebruiker_id){
         $this->connection->query($sql);
     }
 
-    echo "<pre>";print_r($bijwerkenBoodschappen);echo "</pre>";
-    echo "<pre>";print_r($toevoegenBoodschappen);echo "</pre>";
  } 
 
 

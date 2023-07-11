@@ -56,9 +56,9 @@ class gerecht {
         return intval($totaal);
     }
 
-        private function berekenWaardering($waarderingen){
+        private function berekenWaardering($waarderingen){ 
             $aantalWaardering = count($waarderingen);
-           
+           if($aantalWaardering == 0) return false;
            $nummerWaardering = 0;
            foreach($waarderingen as $waardering) {
             $nummerWaardering += $waardering["numeriekveld"];
@@ -75,16 +75,14 @@ class gerecht {
            }
            
         }
+        return false; 
     }
   
-    public function selecteerGerecht($ids = null) {
+    public function selecteerGerecht($id = null) {
         $sql = "SELECT * FROM gerecht";
         
-        if ($ids !== null) {
-            if (is_array($ids)) {
-                $ids = implode(',', $ids);
-            }
-            $sql .= " WHERE id IN ($ids)";
+        if ($id !== null) {
+            $sql .= " WHERE id = $id";
         }
         
         $result = mysqli_query($this->connection, $sql);

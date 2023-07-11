@@ -29,7 +29,7 @@
                 $artikel = $this->getArtikel($ingredienten['artikel_id'], MYSQLI_ASSOC);
 
                 $return [] = [
-                    "id" => $ingredienten['gerecht_id'],
+                    "id" => $ingredienten['id'],
                     "gerecht_id" => $ingredienten['gerecht_id'],
                     "artikel_id" => $ingredienten['artikel_id'],
                     "hoeveelheid" => $ingredienten['hoeveelheid'],

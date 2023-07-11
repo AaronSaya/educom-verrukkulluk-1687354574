@@ -7,6 +7,7 @@ require_once("lib/keukentype.php");
 require_once("lib/ingrediënten.php");
 require_once("lib/gerecht_info.php");
 require_once("lib/gerecht.php");
+require_once("lib/boodschappen.php");
 
 /// INIT
 $db = new database();
@@ -16,6 +17,7 @@ $ing = new ingrediënt($db->getConnection());
 $gi = new gerechtInfo($db->getConnection());
 $gbr = new gebruiker($db->getConnection());
 $grt = new gerecht($db->getConnection());
+$bsn = new boodschappen($db->getConnection());
 
 
 /// VERWERK 
@@ -24,10 +26,11 @@ $dataKeukenType = $kt->selecteerKeukenType(1);
 $dataIngrediënt = $ing->selecteerIngrediënt(2);
 $dataGerechtInfo = $gi->selecteerGerechtInfo(2,"B");
 $dataGebruiker = $gbr->selecteerGebruiker(2);
-$dataGerecht = $grt->selecteerGerecht(2);
+$dataGerecht = $grt->selecteerGerecht();
+$dataBoodschappen = $bsn->selecteerBoodschappen(2);
 
 
 /// RETURN
 print '<pre>';
-print_r($dataGerecht);
+print_r($dataBoodschappen);
 print '</pre>';

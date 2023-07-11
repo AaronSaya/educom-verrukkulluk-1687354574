@@ -6,8 +6,6 @@ private $connection;
 private $ingrediënten;
 private $gebruiker;
 
-
-
 public function __construct($connection){
     $this->connection =  $connection;
     $this->ingrediënten = new ingrediënt($connection);
@@ -61,16 +59,12 @@ private function getGebruiker($gebruiker_id){
     
 
 public function addBoodschappen($gerecht_id, $gebruiker_id){
-
     
       $ingredienten = $this->getIngrediënt($gerecht_id);
 
       $boodschappenlijst =[];
-      
-      
+            
       foreach($ingredienten as $ingredient) {      
-
-        
 
         if($preLijst = $this->artikelOpLijst($ingredient["artikel_id"], $gebruiker_id)){
             $boodschappenlijst[] = [
@@ -90,14 +84,10 @@ public function addBoodschappen($gerecht_id, $gebruiker_id){
             ];
         }
       
-      }
-  
+      } 
         return $boodschappenlijst;
-
     }
-
-
-   
+ 
 public function artikelOpLijst($artikel_id, $gebruiker_id){
 
        $boodschappen = $this->selecteerBoodschappen($gebruiker_id);
@@ -106,8 +96,7 @@ public function artikelOpLijst($artikel_id, $gebruiker_id){
        }
 
        return false;
-    }
-    
+    }   
 }
 
 ?>

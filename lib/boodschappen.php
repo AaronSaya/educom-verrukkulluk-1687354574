@@ -16,9 +16,7 @@ private function getIngrediënt($gerecht_id) {
     return($this->ingrediënten->selecteerIngrediënt($gerecht_id));
 }
 
-private function getGebruiker($gebruiker_id){
-    return ($this->gebruiker->selecteerGebruiker($gebruiker_id));
-}
+
 
 
     public function selecteerBoodschappen($gebruiker_id) {

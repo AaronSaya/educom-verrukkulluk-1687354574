@@ -1,5 +1,6 @@
 <?php
 
+
 class Boodschappen {
 
 private $connection;
@@ -36,27 +37,28 @@ public function addBoodschappen($gerecht_id, $gebruiker_id){
         if($boodschap = $this->artikelOpLijst($ingredient["artikel_id"], $gebruiker_id)) {
             $bijwerkenBoodschappen = [
                 "id" => $boodschap["id"],
-                "aantal" => $boodschap["aantal"] + $ingredient["aantal"],
+                "hoeveelheid" => $boodschap["hoeveelheid"] + $ingredient["hoeveelheid"],
             ];
         } else {
             $toevoegenBoodschappen [] = [
                 "artikel_id" => $ingredienten["artikel_id"],
-                "aantal" => $ingredienten["aantal"],
+                "hoeveelheid" => $ingredienten["hoeveelheid"],
             ];
         }
        
       }
     foreach($bijwerkenBoodschappen as $boodschap) {
-        $bijwerken = "UPDATE boodschappen SET aantal = $boodschap[aantal] WHERE id = $boodschap[id];";
+        $bijwerken = "UPDATE boodschappen SET hoeveelheid = $boodschap[hoeveelheid] WHERE id = $boodschap[id];";
         $this->connection->query($bijwerken);
     }
 
     foreach ($toevoegenBoodschappen as $boodschap) {
-        $toevoegen = "INSERT INTO 'boodschappen' ('gebruiker_id', 'artikel_id', 'aantal') 
-                VALUES ($gebruiker_id, $boodschap[artikel_id], $boodschap[aantal]);";
+        $toevoegen = "INSERT INTO boodschappen (gebruiker_id, artikel_id, hoeveelheid`) 
+                VALUES ($gebruiker_id, {$boodschap[`artikel_id`]}, {$boodschap[`hoeveelheid`]});";
         $this->connection->query($toevoegen);
     }
 
+    return $toevoegenBoodschappen;
  } 
 
 

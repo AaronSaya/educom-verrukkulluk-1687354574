@@ -47,8 +47,8 @@ public function addBoodschappen($gerecht_id, $gebruiker_id){
        
       }
     foreach($bijwerkenBoodschappen as $boodschap) {
-        $query = "UPDATE boodschappen SET aantal = $boodschap[aantal] WHERE id = $boodschap[id];";
-        $this->connection->query($query);
+        $bijwerken = "UPDATE boodschappen SET aantal = $boodschap[aantal] WHERE id = $boodschap[id];";
+        $this->connection->query($bijwerken);
     }
 
     foreach ($toevoegenBoodschappen as $boodschap) {

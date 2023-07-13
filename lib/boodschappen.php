@@ -40,8 +40,8 @@ private function getIngrediënt($gerecht_id) {
     private function bijwerkenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheid){
       $bijwerken =  $this->artikelOpLijst($artikel_id, $gebruiker_id);
     
-      $nieuweHoeveelheid = $bijwerken['hoeveelheid'] + $hoeveelheid;
-
+      $nieuweHoeveelheid = $bijwerken['hoeveelheid'] + ($hoeveelheid/4);
+      $nieuweHoeveelheid = ceil($nieuweHoeveelheid);
 
       $sql = "UPDATE boodschappenlijst SET hoeveelheid = $nieuweHoeveelheid WHERE id = $bijwerken[id];";
       $this->connection->query($sql);

@@ -24,54 +24,53 @@ private function getIngrediënt($gerecht_id) {
         
         return $boodschappen;
     }
+
+    public function artikelOpLijst($artikel_id, $gebruiker_id) {
+
+        $boodschappen = $this->selecteerBoodschappen($gebruiker_id);
+ 
+        foreach($boodschappen as $boodschap) {
+         if($boodschap["artikel_id"] == $artikel_id) {
+             return $boodschap;
+         }
+        }
+        return false;
+   }
     
+    private function bijwerkenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheid){
+      $bijwerken =  $this->artikelOpLijst($artikel_id, $gebruiker_id);
+    
+      $nieuweHoeveelheid = $bijwerken['hoeveelheid'] + $hoeveelheid;
+
+
+      $sql = "UPDATE boodschappenlijst SET hoeveelheid = $nieuweHoeveelheid WHERE id = $bijwerken[id];";
+      $this->connection->query($sql);
+      print '<pre>';
+        print_r($bijwerken);
+        print '<pre>';
+    }
+
+    private function toevoegenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheid){
+   
+    $sql = "INSERT INTO `boodschappenlijst`( `artikel_id`, `gebruiker_id`, `hoeveelheid`) VALUES ('$artikel_id','$gebruiker_id','$hoeveelheid');";
+    $this->connection->query($sql);
+    }
 
 public function addBoodschappen($gerecht_id, $gebruiker_id){
     
       $ingredienten = $this->getIngrediënt($gerecht_id);
-
-      $bijwerkenBoodschappen = [];
-      $toevoegenBoodschappen =[];
             
-      foreach($ingredienten as $ingredient) {      
-        if($boodschap = $this->artikelOpLijst($ingredient["artikel_id"], $gebruiker_id)) {
-            $bijwerkenBoodschappen = [
-                "id" => $boodschap["id"],
-                "hoeveelheid" => $boodschap["hoeveelheid"] + $ingredient["hoeveelheid"],
-            ];
+      foreach($ingredienten as $ingredient) {     
+        $artikel_id = $ingredient["artikel_id"];
+        $hoeveelheid = $ingredient["hoeveelheid"]; 
+        if($this->artikelOpLijst($ingredient["artikel_id"], $gebruiker_id)) {
+            $this->bijwerkenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheid); 
         } else {
-            $toevoegenBoodschappen [] = [
-                "artikel_id" => $ingredienten["artikel_id"],
-                "hoeveelheid" => $ingredienten["hoeveelheid"],
-            ];
+           $this->toevoegenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheid);
         }
        
       }
-    foreach($bijwerkenBoodschappen as $boodschap) {
-        $bijwerken = "UPDATE boodschappen SET hoeveelheid = $boodschap[hoeveelheid] WHERE id = $boodschap[id];";
-        $this->connection->query($bijwerken);
+    
     }
-
-    foreach ($toevoegenBoodschappen as $boodschap) {
-        $toevoegen = "INSERT INTO boodschappen (gebruiker_id, artikel_id, hoeveelheid`) 
-                VALUES ($gebruiker_id, {$boodschap[`artikel_id`]}, {$boodschap[`hoeveelheid`]});";
-        $this->connection->query($toevoegen);
-    }
-
-    return $toevoegenBoodschappen;
- } 
-
-
-    public function artikelOpLijst($artikel_id, $gebruiker_id) {
-
-       $boodschappen = $this->selecteerBoodschappen($gebruiker_id);
-
-       foreach($boodschappen as $boodschap) {
-        if($boodschap["artikel_id"] == $artikel_id) {
-            return $boodschap;
-        }
-       }
-       return false;
-  }
 }
 ?>

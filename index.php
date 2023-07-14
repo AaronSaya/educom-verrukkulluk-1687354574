@@ -24,10 +24,10 @@ $bsn = new boodschappen($db->getConnection());
 $dataArtikel = $art->selecteerArtikel(1);
 $dataKeukenType = $kt->selecteerKeukenType(1);
 $dataIngrediënt = $ing->selecteerIngrediënt(2);
-$dataGerechtInfo = $gi->selecteerGerechtInfo(2,"B");
+$dataGerechtInfo = $gi->selecteerGerechtInfo(2, "B");
 $dataGebruiker = $gbr->selecteerGebruiker(2);
 $dataGerecht = $grt->selecteerGerecht();
-$dataBoodschappen = $bsn->addBoodschappen(1,1);
+$dataBoodschappen = $bsn->addBoodschappen(1, 1);
 
 
 /// RETURN

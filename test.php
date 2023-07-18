@@ -1,6 +1,19 @@
 <?php
 //// Allereerst zorgen dat de "Autoloader" uit vendor opgenomen wordt:
 require_once("./vendor/autoload.php");
+require_once("lib/database.php");
+require_once("lib/artikel.php");
+require_once("lib/gebruiker.php");
+require_once("lib/keukentype.php");
+require_once("lib/ingrediënten.php");
+require_once("lib/gerecht_info.php");
+require_once("lib/boodschappen.php");
+
+
+$db = new database();
+
+
+$connection = $db->getConnection();
 
 /// Twig koppelen:
 $loader = new \Twig\Loader\FilesystemLoader("./templates");
@@ -8,14 +21,14 @@ $loader = new \Twig\Loader\FilesystemLoader("./templates");
 /// $twig = new \Twig\Environment($loader), ["cache" => "./cache/cc"]);
 
 /// VOOR DEVELOPMENT:
-$twig = new \Twig\Environment($loader, ["debug" => true ]);
+$twig = new \Twig\Environment($loader, ["debug" => true]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 /******************************/
 
 /// Next step, iets met je data doen. Ophalen of zo
 require_once("lib/gerecht.php");
-$gerecht = new gerecht();
+$gerecht = new gerecht($connection);
 $data = $gerecht->selecteerGerecht();
 
 
@@ -28,23 +41,23 @@ $gerecht_id = isset($_GET["gerecht_id"]) ? $_GET["gerecht_id"] : "";
 $action = isset($_GET["action"]) ? $_GET["action"] : "homepage";
 
 
-switch($action) {
+switch ($action) {
 
-        case "homepage": {
+    case "homepage": {
             $data = $gerecht->selecteerGerecht();
-            $template = 'detail.html.twig';
+            $template = 'homepage.html.twig';
             $title = "homepage";
             break;
         }
 
-        case "detail": {
+    case "detail": {
             $data = $gerecht->selecteerGerecht($gerecht_id);
             $template = 'detail.html.twig';
             $title = "detail pagina";
             break;
         }
 
-        /// etc
+    /// etc
 
 }
 

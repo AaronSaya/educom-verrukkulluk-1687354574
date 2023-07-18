@@ -17,15 +17,21 @@ class gerechtInfo
         return ($this->gebruiker->selecteerGebruiker($gebruiker_id));
     }
 
-    //favoriet aanpassen, kan nu meerdere keren favoriet maken
+
+    public function getGerechtInfo($gerechtInfo_id)
+    {
+        $sql = "select * from `recipeInfo` where id = $gerechtInfo_id;";
+
+        $result = mysqli_query($this->connection, $sql);
+        $gerechtInfo = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+        return ($gerechtInfo);
+    }
+
     public function addFavorite($gebruiker_id, $gerecht_id)
     {
-        $sql = "SELECT * FROM favorieten WHERE gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";
-        $result = mysqli_query($this->connection, $sql);
-        if (mysqli_num_rows($result) === 0) {
-            $sql = "INSERT INTO favorieten (gebruiker_id, gerecht_id) VALUES ($gebruiker_id, $gerecht_id)";
-            mysqli_query($this->connection, $sql);
-        }
+        $sql = "INSERT INTO favorieten (gebruiker_id, gerecht_id) VALUES ($gebruiker_id, $gerecht_id)";
+        mysqli_query($this->connection, $sql);
     }
     public function removeFavorite($gebruiker_id, $gerecht_id)
     {
@@ -61,12 +67,10 @@ class gerechtInfo
                     "gebruikersnaam" => $gebruiker["gebruikersnaam"],
                     "wachtwoord" => $gebruiker["wachtwoord"],
                     "email" => $gebruiker["email"],
-                    "afbeelding" => $gebruiker["afbeelding"],
+                    "afbeelding" => $gebruiker["foto_gebruiker"],
 
                 ];
-            }
-
-             else {
+            } else {
                 $return[] = [
                     "id" => $gerechtInfo["id"],
                     "record_type" => $gerechtInfo["record_type"],
@@ -76,8 +80,11 @@ class gerechtInfo
                     "numeriekveld" => $gerechtInfo["numeriekveld"],
                 ];
             }
+
         }
 
         return ($return);
     }
 }
+
+?>

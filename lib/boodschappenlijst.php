@@ -10,7 +10,7 @@ class Boodschappen
 
     public function __construct($connection)
     {
-        $this->connection =  $connection;
+        $this->connection = $connection;
         $this->ingrediënten = new ingrediënt($connection);
     }
 
@@ -44,22 +44,19 @@ class Boodschappen
 
     private function bijwerkenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheid)
     {
-        $bijwerken =  $this->artikelOpLijst($artikel_id, $gebruiker_id);
+        $bijwerken = $this->artikelOpLijst($artikel_id, $gebruiker_id);
 
-        $nieuweHoeveelheid = ($bijwerken['hoeveelheid_ingredient'] + ($hoeveelheid)) / $bijwerken["hoeveelheid_verpakking"];
+        $nieuweHoeveelheid = ($bijwerken['hoeveelheid_ingredient'] + ($hoeveelheid));
         $nieuweHoeveelheid = ceil($nieuweHoeveelheid);
 
         $sql = "UPDATE boodschappenlijst SET aantal_artikel = $nieuweHoeveelheid WHERE id = $bijwerken[id];";
         $this->connection->query($sql);
     }
 
-    private function toevoegenBoodschappen($artikel_id, $gebruiker_id, $nieuwAantal)
+    private function toevoegenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheid)
     {
-        $toevoegen =  $this->artikelOpLijst($artikel_id, $gebruiker_id);
-        $nieuwAantal = $toevoegen["hoeveelheid_ingredient"] / $toevoegen["hoeveelheid_verpakking"];
-        $nieuwAantal = ceil($nieuwAantal);
 
-        $sql = "INSERT INTO `boodschappenlijst`( `artikel_id`, `gebruiker_id`, `aantal_artikel`) VALUES ('$artikel_id','$gebruiker_id','$nieuwAantal');";
+        $sql = "INSERT INTO `boodschappenlijst`( `artikel_id`, `gebruiker_id`, `aantal_artikel`) VALUES ('$artikel_id','$gebruiker_id','$hoeveelheid');";
         $this->connection->query($sql);
     }
 

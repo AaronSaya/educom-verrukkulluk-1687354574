@@ -52,3 +52,73 @@ html, body {
     font-family: "Helvetica Neue", Arial, SansSerif;
     font-size: 16px;
 }
+
+
+
+/**  NAVBAR **/
+
+.navbar{
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    background-image: url("https://radar.assets.avrotros.nl/user_upload_2020/10%3A02%20Intuitief%20eten%20.jpg");
+    background-position: center center;
+    background-size: 100%, 100%;
+    height: 400px ;
+    justify-content: center;
+}
+
+.navigation {
+    width: 100%;
+    background-color: #000;
+    color: #FFF;
+    padding: 40px;
+}
+
+.menu-trigger {
+    
+    background-color: rgb(212, 25, 25);
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    z-index: 5000 !important;
+}
+
+.menu-trigger:hover {
+    background-color: #df6546;
+}
+
+.menu-trigger:hover .dropdown {
+    top: 0px;
+}
+
+.dropdown {
+    position: fixed;
+    top: -400px;
+    left: 0px;
+    right: 0px;
+    height: 200px;
+    background-color: #FFF;
+    transition: 0.8s ease;
+    padding: 40px;
+}
+
+/** AFBEELDING **/
+
+.afbeelding-menu {
+    width: 400;
+    height: 200;
+}
+  
+
+
+/** MENU **/
+
+.menu{
+    list-style-type: none;
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+    padding: 30px;
+}

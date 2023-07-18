@@ -66,15 +66,7 @@ class gerechtInfo
                 ];
             }
 
-            /* elseif ($gerechtInfo['record_type'] == 'W') {
-               $return [] = [
-                    "id" => $gerechtInfo["id"],
-                    "record_type" => $gerechtInfo["record_type"],
-                    "gerecht_id" => $gerechtInfo["gerecht_id"],
-                    "datum" => $gerechtInfo["datum"],
-                    "waardering" => $gerechtInfo["numeriekveld"],
-                   
-            ];}*/ else {
+             else {
                 $return[] = [
                     "id" => $gerechtInfo["id"],
                     "record_type" => $gerechtInfo["record_type"],

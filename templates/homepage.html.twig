@@ -3,14 +3,16 @@
 
 {% block header %}
 	<div class="navbar">
-		<img src="assets/img/logo-v2.png"/>
+		<img src="assets/img/logo-v2.png" style="padding-top: 85px;"/>
+		<div class="input-icons">
+			<i class="fas fa-search"></i>
+			<input class="zoekveld " type="text" placeholder="Zoeken">
+		</div>
 		<div class="menu-trigger">
 			<div class="dropdown">
-				<div>
-					<img src="assets/img/logo-v2.png"/>
-					<span>Mijn Favorieten</span>
-					<span>Mijn Boodschappen</span>
-				</div>
+				<img src="assets/img/logo-v2.png"/>
+				<span id="nav-favoriet">Mijn Favorieten</span>
+				<span id="nav-boodschappen">Mijn Boodschappen</span>
 			</div>
 		</div>
 	</div>
@@ -22,16 +24,20 @@
 
 
 {# Loop #}
-<ul class="menu">
+<ul>
 	{% for gerecht in data %}
+
 		<li>
 			<img class="afbeelding-menu" src="{{gerecht.gerechten.afbeelding}}">
 
 			<h4>{{ gerecht.gerechten.titel }}<h4>
 					<span class="omschrijving">{{gerecht.gerechten.korte_omschrijving}}</span><br>
-					<span>Waardering{{gerecht.berekenWaardering}}</span><br>
-					<span>Prijs{{gerecht.totaalprijs}}</span><br>
-					<span>Caloriën{{gerecht.totaalcalories}}</span>
+					<span>Waardering
+						{{gerecht.berekenWaardering}}</span><br>
+					<span>Prijs
+						{{gerecht.totaalprijs}}</span><br>
+					<span>Caloriën
+						{{gerecht.totaalcalories}}</span>
 					<ul>
 						{% for ingr in gerecht.ingredienten %}
 							<li>

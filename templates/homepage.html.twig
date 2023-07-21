@@ -2,19 +2,23 @@
 {% extends "main.html.twig" %}
 
 {% block header %}
+
+	{#NAVBAR#}
 	<div class="navbar">
 		<img src="assets/img/logo-v2.png" style="padding-top: 85px;"/>
-		<div class="input-icons">
-			<i class="fas fa-search"></i>
+		<div class="content">
 			<input class="zoekveld " type="text" placeholder="Zoeken">
 		</div>
+		{#DROPDOWN#}
 		<div class="menu-trigger">
+			<i class="fa fa-bars"></i>
 			<div class="dropdown">
 				<img src="assets/img/logo-v2.png"/>
 				<span id="nav-favoriet">Mijn Favorieten</span>
 				<span id="nav-boodschappen">Mijn Boodschappen</span>
 			</div>
 		</div>
+		<div></div>
 	</div>
 {% endblock %}
 

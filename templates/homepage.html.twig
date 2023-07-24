@@ -2,17 +2,23 @@
 {% extends "main.html.twig" %}
 
 {% block header %}
+
+	{#NAVBAR#}
 	<div class="navbar">
-		<img src="assets/img/logo-v2.png"/>
+		<img src="assets/img/logo-v2.png" style="padding-top: 85px;"/>
+		<div class="content">
+			<input class="zoekveld " type="text" placeholder="Zoeken">
+		</div>
+		{#DROPDOWN#}
 		<div class="menu-trigger">
+			<i class="fa fa-bars"></i>
 			<div class="dropdown">
-				<div>
-					<img src="assets/img/logo-v2.png"/>
-					<span>Mijn Favorieten</span>
-					<span>Mijn Boodschappen</span>
-				</div>
+				<img src="assets/img/logo-v2.png"/>
+				<span id="nav-favoriet">Mijn Favorieten</span>
+				<span id="nav-boodschappen">Mijn Boodschappen</span>
 			</div>
 		</div>
+		<div></div>
 	</div>
 {% endblock %}
 
@@ -22,14 +28,51 @@
 
 
 {# Loop #}
-<ul class="menu">
-	{% for gerecht in data %}
-		<li>
-			<img class="afbeelding-menu" src="{{gerecht.gerechten.afbeelding}}">
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-12">
+					<ul class="menu">
+						{% for gerecht in data %}
+							<div class="col-md-12">
+								<div class="card">
+									<li>
 
-			<h4>{{ gerecht.gerechten.titel }}<h4>
-					{{gerecht.gerechten.korte_omschrijving}}
-					<ul>
-						{% for ingr in gerecht.ingredienten %}
-							<li>
-								<spanDit {% if ingr.id < 2 %}style='color: #F00'{% endif %}>{{ ingr.naam }} </span> {# if #} {% if ingr.id == 3 %} <strong> is id 3!</strong> {% endif %} </li> {% endfor %} </ul> </li> {% endfor %} </ul> {# Dump #} <pre> {{ dump(data) }} </pre> {% endblock %}
+										{#IMAGE#}
+										<img class="card-img-top" src="{{gerecht.gerechten.afbeelding}}">
+
+										<div
+											class="content">
+											{#DATUM#}
+											<span>Datum:
+												{{gerecht.gerechten.datum_toegevoegd}}</span><br>
+
+											{#GEBRUIKER#}
+											<span>User:
+												{{gerecht.gebruiker.gebruikersnaam}}</span><br>
+
+											{#KEUKEN#}
+											<h4>Keuken:
+												{{gerecht.keuken.omschrijving}}
+												Type:
+												{{gerecht.type.omschrijving}}</h4>
+
+											{#TYPE#}
+											<span>Type:
+												{{gerecht.type.omschrijving}}</span><br>
+
+											{#TITEL#}
+											<h4>{{ gerecht.gerechten.titel }}<h4>
+
+													{#OMSCHRIJVING#}
+													<span class="omschrijving">{{gerecht.gerechten.korte_omschrijving}}</span><br>
+
+													{#WAARDERING#}
+													<span>Waardering
+														{{gerecht.berekenWaardering}}</span><br>
+												</div>
+												<ul>
+													{% for ingr in gerecht.ingredienten %}
+														<li>
+															<spanDit {% if ingr.id < 2 %}style='color: #F00'{% endif %}>{{ ingr.naam }} </span> {# if #} {% if ingr.id == 3 %} <strong> is id 3!</strong> {% endif %} </li> {% endfor %} </ul> <div class="info"> <button class="button" type="submit"> smullen </button> <div class="details"> <i class="fa fa-user-friends"> 4</i> <i class="fa fa-euro-sign"> {{ gerecht.totaalprijs }} </i> <i class="fa fa-fire"> {{ gerecht.totaalcalories }} </i> </div> </div> </li> </div> </div> {% endfor %} </ul> </div> </div> </div> </div> </div> {# Dump <pre> {{ dump(data) }} </pre> #} {% endblock %}

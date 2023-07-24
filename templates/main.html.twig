@@ -18,7 +18,6 @@
 </html>
 <body>
 	<div class="container-fluid">
-
 		<div class="row">
 			<div class="col-md-12"> {% block header %}{% endblock %}
 				</div>
@@ -26,29 +25,107 @@
 
 			<div class="row">
 				<div class="col-md-3">
-					<h2>Agenda</h2>
-					<i class="fa fa-calendar"></i>
-					FontAwesome
-					<a href="https://fontawesome.com/icons?d=gallery&m=free">Documentation</a><br>
-					<i class="fa fa-file-pdf"></i>
-					<a href="https://www.layoutit.com/build">Layout-it</a>
+					<div class="row">
+						<div class="col-md-12" id="sidebar">
+							<img src="assets\img\verrukkulluk-agenda.png">
+							<div class="row">
+								<div class="col-md-3" id="activiteit">
+
+									<i id="calendar-icon">
+										<img src="assets\img\calendar.png"></i>
+								</div>
+								<div class="col-md-9" id="activiteit">
+									<h4>Vegetarisch koken</h4>
+									<p>Een workshop vegetarisch koken, onder leiding van Trientje Hupsakee</p><br><br>
+								</div>
+								<div class="col-md-3" id="activiteit">
+
+									<i id="calendar-icon">
+										<img src="assets\img\calendar.png"></i>
+								</div>
+								<div class="col-md-9" id="activiteit">
+									<h4>Vegetarisch koken</h4>
+									<p>Een workshop vegetarisch koken, onder leiding van Trientje Hupsakee</p><br><br>
+								</div>
+								<div class="col-md-3" id="activiteit">
+
+									<i id="calendar-icon">
+										<img src="assets\img\calendar.png"></i>
+								</div>
+								<div class="col-md-9" id="activiteit">
+									<h4>Vegetarisch koken</h4>
+									<p>Een workshop vegetarisch koken, onder leiding van Trientje Hupsakee</p><br><br>
+								</div>
+								<div class="col-md-3" id="activiteit">
+
+									<i id="calendar-icon">
+										<img src="assets\img\calendar.png"></i>
+								</div>
+								<div class="col-md-9" id="activiteit">
+									<h4>Vegetarisch koken</h4>
+									<p>Een workshop vegetarisch koken, onder leiding van Trientje Hupsakee</p><br><br>
+								</div>
+								<div class="col-md-3" id="activiteit">
+
+									<i id="calendar-icon">
+										<img src="assets\img\calendar.png"></i>
+								</div>
+								<div class="col-md-9" id="activiteit">
+									<h4>Vegetarisch koken</h4>
+									<p>Een workshop vegetarisch koken, onder leiding van Trientje Hupsakee</p><br><br>
+								</div>
 
 
+								<a href="https://fontawesome.com/icons?d=gallery&m=free">Documentation</a><br>
+								<i class="fa fa-file-pdf"></i>
+								<a href="https://www.layoutit.com/build">Layout-it</a>
+
+							</div>
+						</div>
+
+						<div class="login">
+							<img src="assets\img\verrukkulluk-login.png"/>
+							<form>
+								<div class="login-icons">
+									<i class="fa fa-user icon"></i>
+									<input class="input-field " type="text" placeholder="gebruiker">
+								</div>
+
+								<div class="login-icons">
+									<i class="fa fa-lock icon"></i>
+									<input class="input-field " type="password" placeholder="password">
+								</div>
+
+								<button class="button" type="submit">
+									Log In
+								</button>
+							</form>
+						</div>
+					</div>
 				</div>
-				<div class="col-md-9">
-					<h2>Content</h2>
-					{%  block content %}{%  endblock %}
+
+
+				<div class="col-md-9"> {%  block content %}{%  endblock %}
+					</div>
 				</div>
-			</div>
 
 
-			<div class="row">
-				<div class="col-md-12">
-					<h1>Contanct</h1>
+				<div class="row">
+					<div class="col-md-12" id="footer">
+						<div class="row">
+							<div class="col-md-3 ">
+								<img src="assets\img\verrukkulluk-burger.png">
+							</div>
+							<div class="col-md-9 ">
+								<h1>Contanct</h1>
+								<p>Verrukkulluk.nl<br>Poststraat 2B<br>
+									info@verrukkulluk.nl</p>
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>
+			</body>
+		</body>
+	</div>
 
-
-		</div>
-
-	</body>
+</body></body>

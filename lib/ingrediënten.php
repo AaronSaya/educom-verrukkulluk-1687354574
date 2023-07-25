@@ -39,6 +39,7 @@
                     "eenheid" => $artikel["eenheid"],
                     "hoeveelheid_verpakking" => $artikel["hoeveelheid_verpakking"],
                     "calorie" => $artikel["calorie"],
+                    "artikel_afbeelding" => $artikel["artikel_afbeelding"],
 
                 ];
                

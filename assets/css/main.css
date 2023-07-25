@@ -51,6 +51,7 @@ h3, h4, h5 {
 html, body {
     font-family: "Helvetica Neue", Arial, SansSerif;
     font-size: 16px;
+    background-color: #fff0d6;
 }
 
 
@@ -126,6 +127,7 @@ html, body {
     background-repeat: no-repeat;
     
 }
+/**DETAIL**/
 
 
 /** MENU **/
@@ -136,13 +138,14 @@ html, body {
     -moz-columns: 2;
     padding: 30px;
     column-gap: 0;
+    overflow: auto;
 }
 .card{
   margin: 20px;
   border-style: none;
   max-height: 50%;
   max-width: 100%;
-  background-color:#fff0d6;
+  background-color:#fff;
   border-style: solid;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
@@ -174,6 +177,21 @@ li {
     font-size: 15;
 }
 
+.button {
+    height:auto;
+    width: auto;
+    color: white;
+    background-color: #b31714;
+    border-radius: 20px;
+    border: none;
+    font-family: "pretty_lilyregular";
+    font-size: 30;
+}
+
+.details {
+    color: #b31714;
+    
+}
 /*SIDEBAR*/
 
 #sidebar {

@@ -1,5 +1,73 @@
 {% extends "main.html.twig" %}
 
 {% block header %}
-<h1>Hallo Bram</h1>
+
+	{#NAVBAR#}
+	<div class="navbar">
+		<a href="http://localhost/educom-verrukkulluk/index.php?action=homepage&gerecht_id={{gerecht.gerechten.id}}">Home</a>
+		<img src="assets/img/logo-v2.png" style="padding-top: 85px;"/>
+		<div class="content">
+			<input class="zoekveld " type="text" placeholder="Zoeken">
+		</div>
+		{#DROPDOWN#}
+		<div class="menu-trigger">
+			<i class="fa fa-bars"></i>
+			<div class="dropdown">
+				<img src="assets/img/logo-v2.png"/>
+				<span id="nav-favoriet">Mijn Favorieten</span>
+				<span id="nav-boodschappen">Mijn Boodschappen</span>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block content %}
+	<div class="container-fluid">
+		<div class="row"></div>
+		{% for gerecht in data %}
+			<div class="col-md-9">
+				<div class="card">
+					<div class="card-body">
+						<img class="card-img-top" src="{{gerecht.gerechten.afbeelding}}">
+						<p class="card-text">
+							{{gerecht.gerechten.lange_omschrijving}}
+						</p>
+						<div class="details">
+							<i class="fa fa-user-friends">
+								4</i>
+							<i class="fa fa-euro-sign">
+								{{ gerecht.totaalprijs }}
+							</i>
+							<i class="fa fa-fire">
+								{{ gerecht.totaalcalories }}
+							</i>
+						</div>
+					</div>
+				</div>
+				{# details recept #}
+				<div class="card">
+					<div class="menu">
+                                 <ul>
+													{% for ingr in gerecht.ingredienten %}
+                                                   
+														{# <li>
+															<spanDit {% if ingr.id < 2 %}style='color: #F00'{% endif %}>{{ ingr.naam }} </span> 
+															 {% if ingr.id == 3 %} <strong> is id 3!</strong> {% endif %} </li> {% endfor %} #}
+                                                            <li>
+                                                            <img src="{{ingr.artikel_afbeelding}}" ><br>
+                                                            <span> {{ingr.naam_artikel}} </span><br>
+                                                            <span> {{ingr.omschrijving}} </span><br>
+                                                            <span> {{ingr.hoeveelheid}} </span>
+                                                            <span> {{ingr.eenheid}} </span><br>
+
+                                                             </li>
+                                                             
+                                                             {% endfor %}
+							</ul>								 
+                    </div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
 {% endblock %}

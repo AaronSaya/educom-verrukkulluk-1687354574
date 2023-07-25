@@ -18,7 +18,6 @@
 				<span id="nav-boodschappen">Mijn Boodschappen</span>
 			</div>
 		</div>
-		<div></div>
 	</div>
 {% endblock %}
 
@@ -72,7 +71,23 @@
 													<span>Waardering
 														{{gerecht.berekenWaardering}}</span><br>
 												</div>
-												<ul>
+												{# <ul>
 													{% for ingr in gerecht.ingredienten %}
 														<li>
-															<spanDit {% if ingr.id < 2 %}style='color: #F00'{% endif %}>{{ ingr.naam }} </span> {# if #} {% if ingr.id == 3 %} <strong> is id 3!</strong> {% endif %} </li> {% endfor %} </ul> <div class="info"> <button class="button" type="submit"> smullen </button> <div class="details"> <i class="fa fa-user-friends"> 4</i> <i class="fa fa-euro-sign"> {{ gerecht.totaalprijs }} </i> <i class="fa fa-fire"> {{ gerecht.totaalcalories }} </i> </div> </div> </li> </div> </div> {% endfor %} </ul> </div> </div> </div> </div> </div> {# Dump <pre> {{ dump(data) }} </pre> #} {% endblock %}
+															<spanDit {% if ingr.id < 2 %}style='color: #F00'{% endif %}>{{ ingr.naam }} </span> 
+															 {% if ingr.id == 3 %} <strong> is id 3!</strong> {% endif %} </li> {% endfor %}
+															 </ul> #}
+															  <div class="info">
+															  <a href="http://localhost/educom-verrukkulluk/index.php?action=detail&gerecht_id={{gerecht.gerechten.id}}">
+																	smullen!
+															  </a>
+															  <div class="details"> <i class="fa fa-user-friends"> 4</i> <i class="fa fa-euro-sign"> {{ gerecht.totaalprijs }} </i> 
+															  <i class="fa fa-fire"> {{ gerecht.totaalcalories }} </i> </div> 
+															  </div> </li> 
+															  </div> </div> 
+													{% endfor %} 
+															  </ul> </div> 
+															  </div> 
+															  </div>
+															   </div> 
+															   </div> {# Dump <pre> {{ dump(data) }} </pre> #} {% endblock %}

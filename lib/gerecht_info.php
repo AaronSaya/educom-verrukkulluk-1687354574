@@ -67,7 +67,7 @@ class gerechtInfo
                     "gebruikersnaam" => $gebruiker["gebruikersnaam"],
                     "wachtwoord" => $gebruiker["wachtwoord"],
                     "email" => $gebruiker["email"],
-                    "afbeelding" => $gebruiker["foto_gebruiker"],
+                    "foto_gebruiker" => $gebruiker["foto_gebruiker"],
 
                 ];
             } else {

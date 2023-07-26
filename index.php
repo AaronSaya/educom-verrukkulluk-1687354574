@@ -54,3 +54,4 @@ switch ($action) {
 $template = $twig->load($template);
 
 echo $template->render(["titel" => $title, "data" => $data]);
+

@@ -22,52 +22,149 @@
 {% endblock %}
 
 {% block content %}
-	<div class="container-fluid">
-		<div class="row"></div>
-		{% for gerecht in data %}
-			<div class="col-md-9">
-				<div class="card">
-					<div class="card-body">
-						<img class="card-img-top" src="{{gerecht.gerechten.afbeelding}}">
-						<p class="card-text">
-							{{gerecht.gerechten.lange_omschrijving}}
-						</p>
-						<div class="details">
-							<i class="fa fa-user-friends">
-								4</i>
-							<i class="fa fa-euro-sign">
-								{{ gerecht.totaalprijs }}
-							</i>
-							<i class="fa fa-fire">
-								{{ gerecht.totaalcalories }}
-							</i>
+		<div class="container-fluid"> <div class="row">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-6">
+						{% for gerecht in data %}
+							<img id="image-card" src="{{gerecht.gerechten.afbeelding}}"/>
+						</div>
+						<div class="col-md-6">
+							<div class="btn-group" role="group">
+
+								<span class="icon">
+									<i class="fa fa-user-friends">
+										4</i>
+								</span>
+								<span class="icon">
+									<i class="fa fa-euro-sign">
+										{{ gerecht.totaalprijs }}
+									</i>
+								</span>
+								<span class="icon"></i>
+								<i class="fa fa-fire">
+									{{ gerecht.totaalcalories }}
+								</i>
+							</span>
+							<div class="titel">
+								<h4>{{gerecht.gerechten.titel}}</h4>
+							</div>
+							<div class="titel">
+								<h4>Keuken:</h4>
+								{{gerecht.keuken.omschrijving}}
+								<h4>Type:</h4>
+								{{gerecht.type.omschrijving}}</span>
+
+						</div>
+						<div></div>
+					</div>
+					<p class="lange-omschrijving">
+						{{gerecht.gerechten.lange_omschrijving}}
+					</p>
+					<div class="btn-group">
+
+						<button id="lijst" type="button">
+							Op Lijst!
+						</button>
+						<button id="heart" type="button">
+							<i class="fa fa-heart"></i>
+						</button>
+
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="tabs">
+					<input type="radio" id="tab1" name="tabs" checked="checked">
+					<label for="tab1">1</label>
+					<div class="tab">
+						<div class="menu-detail">
+
+							{% for gerecht in data %}
+								<ul>
+									{% for ingr in gerecht.ingredienten %}
+
+										<li>
+											<img src="{{ingr.artikel_afbeelding}}"><br>
+											<span>
+												{{ingr.naam_artikel}}
+											</span><br>
+											<span>
+												{{ingr.omschrijving}}
+											</span><br>
+											<span>
+												{{ingr.hoeveelheid}}
+											</span>
+											<span>
+												{{ingr.eenheid}}
+											</span><br>
+										</li>
+
+									{% endfor %}
+								</ul>
+							{% endfor %}
+
 						</div>
 					</div>
-				</div>
-				{# details recept #}
-				<div class="card">
-					<div class="menu">
-                                 <ul>
-													{% for ingr in gerecht.ingredienten %}
-                                                   
-														{# <li>
-															<spanDit {% if ingr.id < 2 %}style='color: #F00'{% endif %}>{{ ingr.naam }} </span> 
-															 {% if ingr.id == 3 %} <strong> is id 3!</strong> {% endif %} </li> {% endfor %} #}
-                                                            <li>
-                                                            <img src="{{ingr.artikel_afbeelding}}" ><br>
-                                                            <span> {{ingr.naam_artikel}} </span><br>
-                                                            <span> {{ingr.omschrijving}} </span><br>
-                                                            <span> {{ingr.hoeveelheid}} </span>
-                                                            <span> {{ingr.eenheid}} </span><br>
 
-                                                             </li>
-                                                             
-                                                             {% endfor %}
-							</ul>								 
-                    </div>
+					<input type="radio" id="tab2" name="tabs">
+					<label for="tab2">2</label>
+					<div class="tab">
+
+						<div class="menu-detail">
+
+							{% for gerecht in data %}
+								<ol>
+									{% for stap in gerecht.bereidingswijze %}
+
+										<li>
+
+											<span>
+												{{stap.tekstveld}}</br>
+											</span><br>
+
+										</li>
+
+									{% endfor %}
+								</ol>
+							{% endfor %}
+
+						</div>
+
+					</div>
+
+					<input type="radio" id="tab3" name="tabs">
+					<label for="tab3">3</label>
+					<div class="tab">
+
+						<div class="menu-detail">
+
+							{% for gerecht in data %}
+								<ol>
+									{% for opmerking in gerecht.opmerkingen %}
+
+										<li>
+											<span>
+												<img src="{{opmerking.foto_gebruiker}}"></br>
+											</span><br>
+											<span>{{opmerking.gebruikersnaam}}</span></br>
+											<span>
+												{{opmerking.opmerkingen}}
+											</span><br>
+
+										</li>
+
+									{% endfor %}
+								</ol>
+							{% endfor %}
+
+						</div>
+
+					</div>
 				</div>
-			{% endfor %}
+			</div>
 		</div>
 	</div>
-
-{% endblock %}
+</div></div>{% endblock %}

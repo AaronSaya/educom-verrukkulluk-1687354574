@@ -28,17 +28,29 @@ class gerechtInfo
         return ($gerechtInfo);
     }
 
-    public function addFavorite($gebruiker_id, $gerecht_id)
+    public function addFavorite($recordType, $gebruiker_id, $gerecht_id, $datum)
     {
-        $sql = "INSERT INTO favorieten (gebruiker_id, gerecht_id) VALUES ($gebruiker_id, $gerecht_id)";
-        mysqli_query($this->connection, $sql);
+        if ($recordType == "F") {
+            $sql = "INSERT INTO gerecht_info (record_type, gebruiker_id, gerecht_id, datum) VALUES ($recordType, $gebruiker_id, $gerecht_id, $datum)";
+            mysqli_query($this->connection, $sql);
+        } else {
+            return false;
+        }
     }
     public function removeFavorite($gebruiker_id, $gerecht_id)
     {
-        $sql = "DELETE FROM favorieten WHERE gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";
+        $sql = "DELETE FROM gerecht_info WHERE gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";
         mysqli_query($this->connection, $sql);
     }
-
+    public function addRating($recordType, $gebruiker_id, $gerecht_id, $datum, $numeriekveld)
+    {
+        if ($recordType == "F") {
+            $sql = "INSERT INTO gerecht_info (record_type, gebruiker_id, gerecht_id, datum, numeriekveld) VALUES ('$recordType','$gebruiker_id', '$gerecht_id', '$datum','$numeriekveld'";
+            mysqli_query($this->connection, $sql);
+        } else {
+            return false;
+        }
+    }
 
 
     public function selecteerGerechtInfo($gerecht_id, $recordType)

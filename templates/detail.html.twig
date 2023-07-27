@@ -49,7 +49,7 @@
 						</span>
 						<div class="titel">
 							<h4>{{gerecht.gerechten.titel}}
-								<i data-ster = {{gerecht.berekenWaardering}}></i>
+								<i data-ster={{gerecht.berekenWaardering}}></i>
 							</h4>
 							<h4>Keuken:</h4>
 							{{gerecht.keuken.omschrijving}}
@@ -72,12 +72,10 @@
 					</div>
 
 				</div>
-			{% endfor %}
+			
 		</div>
 	</div>
-</div>
-</div>
-<div class="row">
+	<div class="row">
 <div class="col-md-12">
 	<div class="tabs">
 		<input type="radio" id="tab1" name="tabs" checked="checked">
@@ -85,7 +83,7 @@
 		<div class="tab">
 			<div class="menu-detail">
 
-				{% for gerecht in data %}
+				
 					<ul>
 						{% for ingr in gerecht.ingredienten %}
 
@@ -107,7 +105,7 @@
 
 						{% endfor %}
 					</ul>
-				{% endfor %}
+				
 
 			</div>
 		</div>
@@ -118,7 +116,7 @@
 
 			<div class="menu-detail">
 
-				{% for gerecht in data %}
+				
 					<ol>
 						{% for stap in gerecht.bereidingswijze %}
 
@@ -133,7 +131,7 @@
 
 				{% endfor %}
 			</ol>
-		{% endfor %}
+		
 
 	</div>
 
@@ -145,7 +143,7 @@
 
 	<div class="menu-detail">
 
-		{% for gerecht in data %}
+		
 			<ol>
 				{% for opmerking in gerecht.opmerkingen %}
 
@@ -165,4 +163,5 @@
 
 		{% endfor %}
 	</ol>
-{% endfor %}</div></div></div></div></div></div></div></div>{% endblock %}
+{% endfor %}</div></div></div></div></div></div></div></div>
+</div></div>{% endblock %}

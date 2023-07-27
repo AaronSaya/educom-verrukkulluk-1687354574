@@ -444,3 +444,17 @@ li {
   [data-ster^="4.8"]::after{width:96%}
   [data-ster^="4.9"]::after{width:98%}
   [data-ster^="5"]::after{width:100%}
+
+  .star {
+    font-size: 30px;
+    color: #000;
+    cursor: pointer;
+    width: 50px;
+}
+
+.star:hover {
+    color: #F00;
+}
+.red {
+    color: #F00;
+}

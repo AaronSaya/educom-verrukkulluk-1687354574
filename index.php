@@ -33,6 +33,13 @@ $action = isset($_GET["action"]) ? $_GET["action"] : "homepage";
 
 switch ($action) {
 
+    case "addRating" : {
+            $data = $gerecht->addRating($recordType, $gebruiker_id, $gerecht_id, $datum, $numeriekveld);
+            $template = 'homepage.html.twig';
+            $title = "addRating";
+            break;
+    }
+
     case "homepage": {
             $data = $gerecht->selecteerGerecht();
             $template = 'homepage.html.twig';

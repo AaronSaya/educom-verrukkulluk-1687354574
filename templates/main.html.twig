@@ -14,22 +14,28 @@
 
 		<script type="text/javascript" language="javascript" src="assets/jquery/jquery-3.5.1.js"></script>
 		<script type="text/javascript" language="javascript" src="assets/bootstrap/js/bootstrap.js"></script>
-		<script src="js/jquery.js"></script>
+		
 
 		 <script>
       $(document).ready( function() {
 
-		$.ajax({
-			url:".index.php",
-			method: "GET",
-			data: {
-				gerecht_id: {{data.gerecht_id}},
-				waardering: value,
-				action:addRating},
-			success: finction()
-		})
+		
 
          $(".star").click( function() {
+
+		$.ajax({
+			url:"./index.php",
+			method: "GET",
+			data: {
+				gerecht_id: 1,
+				gebruiker_id: 1,
+				numeriekveld: 5,
+				action:"addRating"},
+			success: function(){
+				console.log("rating added")
+			}
+		})
+			
             $(this).addClass("red")
 			const value = $(this).attr('data-value')
 			

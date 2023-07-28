@@ -8,7 +8,7 @@ require_once("lib/keukentype.php");
 require_once("lib/ingrediënten.php");
 require_once("lib/gerecht_info.php");
 require_once("lib/boodschappenlijst.php");
-
+// header('Content-Type: application/json; charset=utf-8');
 
 
 $loader = new \Twig\Loader\FilesystemLoader("./templates");
@@ -21,6 +21,9 @@ $db = new database();
 $connection = $db->getConnection();
 $gerecht = new gerecht($connection);
 $data = $gerecht->selecteerGerecht();
+$gerechtInfo = new gerechtInfo($connection);
+$rating = $gerechtInfo->addRating(1, 1, 1, 'W');
+
 
 /*
 URL:
@@ -34,9 +37,7 @@ $action = isset($_GET["action"]) ? $_GET["action"] : "homepage";
 switch ($action) {
 
     case "addRating" : {
-            $data = $gerecht->addRating($recordType, $gebruiker_id, $gerecht_id, $datum, $numeriekveld);
-            $template = 'homepage.html.twig';
-            $title = "addRating";
+            $rating = $gerechtInfo->addRating($value, $gebruiker_id, $gerecht_id, $recordType );
             break;
     }
 

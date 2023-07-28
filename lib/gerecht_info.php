@@ -42,7 +42,7 @@ class gerechtInfo
         $sql = "DELETE FROM gerecht_info WHERE gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";
         mysqli_query($this->connection, $sql);
     }
-    
+
     public function addRating($recordType, $gebruiker_id, $gerecht_id, $value)
     {
         if ($recordType == "W") {
@@ -51,7 +51,7 @@ class gerechtInfo
         } else {
             return false;
         }
-    }
+    } 
 
 
     public function selecteerGerechtInfo($gerecht_id, $recordType)

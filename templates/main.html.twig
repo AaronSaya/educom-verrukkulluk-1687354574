@@ -19,17 +19,16 @@
 		 <script>
       $(document).ready( function() {
 
-		
-
          $(".star").click( function() {
+			const value = $(this).attr('data-value')
 
 		$.ajax({
 			url:"./index.php",
 			method: "GET",
 			data: {
+				recordType: "W",
 				gerecht_id: 1,
-				gebruiker_id: 1,
-				numeriekveld: 5,
+				numeriekveld: value,
 				action:"addRating"},
 			success: function(){
 				console.log("rating added")
@@ -37,7 +36,7 @@
 		})
 			
             $(this).addClass("red")
-			const value = $(this).attr('data-value')
+			//const value = $(this).attr('data-value')
 			
 			 $(".star").removeClass('red')
 

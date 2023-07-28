@@ -8,7 +8,7 @@ require_once("lib/keukentype.php");
 require_once("lib/ingrediënten.php");
 require_once("lib/gerecht_info.php");
 require_once("lib/boodschappenlijst.php");
-// header('Content-Type: application/json; charset=utf-8');
+
 
 
 $loader = new \Twig\Loader\FilesystemLoader("./templates");
@@ -22,7 +22,7 @@ $connection = $db->getConnection();
 $gerecht = new gerecht($connection);
 $data = $gerecht->selecteerGerecht();
 $gerechtInfo = new gerechtInfo($connection);
-$rating = $gerechtInfo->addRating(1, 1, 1, 'W');
+$rating = $gerechtInfo->addRating($recordType, $gebruiker_id, $gerecht_id, $value);
 
 
 /*
@@ -31,15 +31,11 @@ http://localhost/index.php?gerecht_id=4&action=detail
 */
 
 $gerecht_id = isset($_GET["gerecht_id"]) ? $_GET["gerecht_id"] : "";
+$gebruiker_id = isset($_GET["gebruiker_id"]) ? $_GET["gebruiker_id"] : "";
 $action = isset($_GET["action"]) ? $_GET["action"] : "homepage";
 
 
 switch ($action) {
-
-    case "addRating" : {
-            $rating = $gerechtInfo->addRating($value, $gebruiker_id, $gerecht_id, $recordType );
-            break;
-    }
 
     case "homepage": {
             $data = $gerecht->selecteerGerecht();
@@ -54,6 +50,15 @@ switch ($action) {
             $title = "detail pagina";
             break;
         }
+
+        case "addRating" : {
+            $recordType = "W";
+            $rating = $gerechtInfo->addRating($recordType, $gebruiker_id, $gerecht_id, $value);
+            $template = 'detail.html.twig';
+            header('Content-Type: application/json; charset=utf-8');
+            break;
+    }
+
 
 
 

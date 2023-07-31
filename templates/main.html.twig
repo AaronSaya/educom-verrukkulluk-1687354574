@@ -15,39 +15,38 @@
 		<script type="text/javascript" language="javascript" src="assets/jquery/jquery-3.5.1.js"></script>
 		<script type="text/javascript" language="javascript" src="assets/bootstrap/js/bootstrap.js"></script>
 		
-
+	
 		 <script>
       $(document).ready( function() {
-
+			
+        	 $(".data-star").click( function() {
+				const value = $(this).attr('data-value');
+				const gerechtID = $(this).attr('data-id');
+				
+				$.ajax({
+					url:"./index.php",
+					method: "GET",
+					data: {				
+						gerecht_id: gerechtID,
+						numeriekveld: value,
+						action: 'addRating',
+				 	 
+					success: function() {
 		
-
-         $(".star").click( function() {
-
-		$.ajax({
-			url:"./index.php",
-			method: "GET",
-			data: {
-				gerecht_id: 1,
-				gebruiker_id: 1,
-				numeriekveld: 5,
-				action:"addRating"},
-			success: function(){
-				console.log("rating added")
-			}
-		})
-			
-            $(this).addClass("red")
-			const value = $(this).attr('data-value')
-			
-			 $(".star").removeClass('red')
-
-			 $('.star').each( (index, elem) => {
-              const itemValue = $(elem).attr('data-value')
-              if(itemValue <= value) {
-                $(elem).addClass('red')
-				}
+						$(this).addClass("red")
+						$(".star").removeClass('red')
+						$('.star').each( (index, elem) => {
+							const itemValue = $(elem).attr('data-value')
+							if(itemValue <= value) {
+								$(elem).addClass('red')
+							}
+						});
+						console.log(`value: ${ value }`)
+						//const value = $(this).attr('data-value')
+					},
+				},
 			})
-			console.log(`value: ${ value }`)
+          
          })
 
       })    

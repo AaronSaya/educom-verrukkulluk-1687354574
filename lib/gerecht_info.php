@@ -42,17 +42,18 @@ class gerechtInfo
         $sql = "DELETE FROM gerecht_info WHERE gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";
         mysqli_query($this->connection, $sql);
     }
-    
-    public function addRating($recordType, $gebruiker_id, $gerecht_id, $value)
+
+    public function addRating($gerecht_id, $numeriekveld)
     {
-        if ($recordType == "W") {
-            $sql = "INSERT INTO gerecht_info (record_type, gebruiker_id, gerecht_id, numeriekveld) VALUES ('$recordType','$gebruiker_id', '$gerecht_id', '$value'";
-            mysqli_query($this->connection, $sql);
+        $record_type = "W";
+        $sql = "INSERT INTO gerecht_info (record_type, gerecht_id, numeriekveld) VALUES ('$record_type', '$gerecht_id', '$numeriekveld')";
+
+        if ($this->connection->query($sql) === TRUE) {
+            return true;
         } else {
             return false;
         }
     }
-
 
     public function selecteerGerechtInfo($gerecht_id, $recordType)
     {

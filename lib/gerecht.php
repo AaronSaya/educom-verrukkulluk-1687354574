@@ -74,7 +74,7 @@ class gerecht
             $nummerWaardering += $waardering["numeriekveld"];
         }
         $gemiddeldWaardering = $nummerWaardering / $aantalWaardering;
-        return $gemiddeldWaardering;
+        return number_format($gemiddeldWaardering, 1);
     }
 
     private function bepaalFavoriet($favorieten, $gerecht)

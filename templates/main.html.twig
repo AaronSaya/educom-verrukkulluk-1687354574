@@ -25,18 +25,21 @@
 		$.ajax({
 			url:"./index.php",
 			method: "GET",
-			data: {
-				recordType: "W",
+			data: {				
 				gerecht_id: 1,
+				gebruiker_id: 2,
+				recordType: "W",
 				numeriekveld: value,
-				action:"addRating"},
+				action:"addRating"
+				},
 			success: function(){
+				//const value = $(this).attr('data-value')
 				console.log("rating added")
 			}
 		})
 			
             $(this).addClass("red")
-			//const value = $(this).attr('data-value')
+			
 			
 			 $(".star").removeClass('red')
 

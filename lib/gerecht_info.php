@@ -43,15 +43,15 @@ class gerechtInfo
         mysqli_query($this->connection, $sql);
     }
 
-    public function addRating($recordType, $gebruiker_id, $gerecht_id, $value)
+    public function addRating($recordType, $gebruiker_id, $gerecht_id, $numeriekveld)
     {
         if ($recordType == "W") {
-            $sql = "INSERT INTO gerecht_info (record_type, gebruiker_id, gerecht_id, numeriekveld) VALUES ('$recordType','$gebruiker_id', '$gerecht_id', '$value'";
+            $sql = "INSERT INTO gerecht_info (record_type, gebruiker_id, gerecht_id, numeriekveld) VALUES ('$recordType','$gebruiker_id', '$gerecht_id', '$numeriekveld')";
             mysqli_query($this->connection, $sql);
         } else {
             return false;
         }
-    } 
+    }
 
 
     public function selecteerGerechtInfo($gerecht_id, $recordType)

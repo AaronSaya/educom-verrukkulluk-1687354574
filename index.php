@@ -21,8 +21,7 @@ $db = new database();
 $connection = $db->getConnection();
 $gerecht = new gerecht($connection);
 $data = $gerecht->selecteerGerecht();
-$gerechtInfo = new gerechtInfo($connection);
-$rating = $gerechtInfo->addRating($recordType, $gebruiker_id, $gerecht_id, $value);
+
 
 
 /*
@@ -52,10 +51,8 @@ switch ($action) {
         }
 
         case "addRating" : {
-            $recordType = "W";
-            $rating = $gerechtInfo->addRating($recordType, $gebruiker_id, $gerecht_id, $value);
-            $template = 'detail.html.twig';
-            header('Content-Type: application/json; charset=utf-8');
+         
+          //  header('Content-Type: application/json; charset=utf-8');
             break;
     }
 

@@ -43,7 +43,7 @@ switch ($action) {
                         header('Content-Type: application/json; charset=utf-8');
                         echo json_encode(array('success' => $result));
                         exit();
-                        // break;
+
                 }
 
         case "addRating": {
@@ -52,7 +52,7 @@ switch ($action) {
                         header('Content-Type: application/json; charset=utf-8');
                         echo json_encode(array('success' => $result));
                         exit();
-                        // break;
+
                 }
 
         case "homepage": {

@@ -38,24 +38,19 @@ class gerechtInfo
         $record_type = GERECHT_INFO_TYPE_FAVORIET;
         $currentDateTime = date('Y-m-d');
 
-        $favorieten = ($this->selecteerGerechtInfo($gerecht_id, $gebruiker_id));
-        foreach ($favorieten as $favoriet) {
-            if (!$favoriet['gerecht_id'] == $gerecht_id && $favoriet['gebruikers_id'] == $gebruiker_id) {
         $sql = "INSERT INTO gerecht_info (record_type, gerecht_id, gebruiker_id, datum) VALUES ('$record_type', '$gerecht_id' , '$gebruiker_id', '$currentDateTime')";
-        } else {
-            $sql = "DELETE FROM gerecht_info WHERE record_type = 'F' AND gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";
-        }
+
         if ($this->connection->query($sql) === TRUE) {
             return true;
         } else {
             return false;
         }
     }
-    // public function removeFavorite($gebruiker_id, $gerecht_id)
-    // {
-    //     $sql = "DELETE FROM gerecht_info WHERE record_type = 'F' AND gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";
-    //     mysqli_query($this->connection, $sql);
-    // }
+    public function removeFavorite($gebruiker_id, $gerecht_id)
+    {
+        $sql = "DELETE FROM gerecht_info WHERE record_type = 'F' AND gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";
+        mysqli_query($this->connection, $sql);
+    }
 
     public function addRating($gerecht_id, $numeriekveld)
     {

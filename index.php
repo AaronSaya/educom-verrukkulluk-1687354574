@@ -37,19 +37,22 @@ $action = isset($_GET["action"]) ? $_GET["action"] : "homepage";
 
 switch ($action) {
 
-        case "addFavorite": {
-                        $gebruiker_id = $_GET["gebruker_id"];
-                        $gerecht_id = ($_GET["gerecht_id"]);
+        case "update": {
+                        $gebruiker_id = $_GET["gebruiker_id"];
+                        $data = $gerechtInfo->updateFavoriet($gerecht_id, $gebruiker_id);
                         header('Content-Type: application/json; charset=utf-8');
-                        break;
-
-        }
+                        echo json_encode(array('success' => $result));
+                        exit();
+                        // break;
+                }
 
         case "addRating": {
                         $numeriekveld = $_GET["numeriekveld"];
                         $data = $gerechtInfo->addRating($gerecht_id, $numeriekveld);
                         header('Content-Type: application/json; charset=utf-8');
-                        break;
+                        echo json_encode(array('success' => $result));
+                        exit();
+                        // break;
                 }
 
         case "homepage": {

@@ -73,7 +73,7 @@
 							<button id="lijst" type="button">
 								Op Lijst!
 							</button>
-							<button class="addFavoriteButton" id="heart" type="button" heart-id={{ gerecht.gerechten.id}}>
+							<button class="updateFavoriet" id="heart" type="button" heart-id={{ gerecht.gerechten.id}} heart-gebruiker={{gerecht.gebruiker.id}}>
 								<i class="fa fa-heart"></i>
 							</button>
 						</div>
@@ -128,8 +128,8 @@
 					<ol>
 						{% for stap in gerecht.bereidingswijze %}
 
+							<i> {{stap.numeriekveld}}</i>
 							<li>
-
 								<span>
 									{{stap.tekstveld}}</br>
 							</li>

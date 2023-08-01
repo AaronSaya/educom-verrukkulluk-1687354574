@@ -16,58 +16,61 @@
 		<script type="text/javascript" language="javascript" src="assets/bootstrap/js/bootstrap.js"></script>
 		
 	
-		 <script>
-      $(document).ready( function() {
-			
-        	 $(".data-star").click( function() {
-				const value = $(this).attr('data-value');
-				const gerechtID = $(this).attr('data-id');
-				
-				$.ajax({
-					url:"./index.php",
-					method: "GET",
-					data: {				
-						gerecht_id: gerechtID,
-						numeriekveld: value,
-						action: 'addRating',
-				 	 
-					success: function() {
-		
-						$(this).addClass("red")
-						$(".star").removeClass('red')
-						$('.star').each( (index, elem) => {
-							const itemValue = $(elem).attr('data-value')
-							if(itemValue <= value) {
-								$(elem).addClass('red')
-							}
-						});
-						console.log(`value: ${ value }`)
-						
-					},
-				},
-			})
-          
-         })
+	<script>
+  $(document).ready(function() {
+    $(".star").click(function() {
+      const value = $(this).attr('data-value');
+      const gerechtID = $(this).attr('data-id');
 
-      })    
+      $.ajax({
+        url: "./index.php",
+        method: "GET",
+        data: {
+          gerecht_id: gerechtID,
+          numeriekveld: value,
+          action: 'addRating',
+        
+        
 
-	  	$("addFavoriteButton").click(function) {
-			const gerechtID = $(this).attr('heart-id');
+        success: function() {
+          $(this).addClass("red");
+          $(".star").removeClass('red');
+          $('.star').each((index, elem) => {
+            const itemValue = $(elem).attr('data-value');
+            if (itemValue <= value) {
+              $(elem).addClass('red');
+            }
+          });
+          console.log(`value: ${value}`);
+        }
+		},
+      });
+    });
 
-			$.ajax({
-				url:"./index.php",
-				method: "GET",
-				data: {
-						gerecht_id: gerechtID,
-						gebruiker_id: 
-				}
+    $(".updateFavoriet").click(function() {
+      const heartID = $(this).attr('heart-id');
+      const heartGebruiker = $(this).attr('heart-gebruiker');
+	const datum = 
+      $.ajax({
+        url: "./index.php",
+        method: "GET",
+        data: {
+          gerecht_id: heartID,
+          gebruiker_id: heartGebruiker,
+          action: 'update',
+        },
+        
+
+        success: function() {
+          console.log(`gerecht_id: ${heartID}, gebruiker_id: ${heartGebruiker}`);
+          console.log("success");
+        }
+      });
+    });
+  });
+</script>
 
 
-
-
-			})
-		}
-		</script>
 	</head>
 </html>
 <body>

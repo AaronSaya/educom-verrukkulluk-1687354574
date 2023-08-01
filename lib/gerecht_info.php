@@ -1,5 +1,9 @@
 <?php
 
+define("GERECHT_INFO_TYPE_BEREIDING", 'B');
+define("GERECHT_INFO_TYPE_OPMERKING", 'O');
+define("GERECHT_INFO_TYPE_FAVORIET", 'F');
+define("GERECHT_INFO_TYPE_WAARDERING", 'W');
 class gerechtInfo
 {
 
@@ -28,27 +32,29 @@ class gerechtInfo
         return ($gerechtInfo);
     }
 
-    public function determineFavorite($recordType, $gebruiker_id, $gerecht_id, $datum) {
 
-    }
-
-
-    public function addFavorite($gebruiker_id, $gerecht_id, $datum)
+    public function updateFavoriet($gerecht_id, $gebruiker_id)
     {
-            $recordType = "F";
-            $sql = "INSERT INTO gerecht_info (record_type, gebruiker_id, gerecht_id, datum) VALUES ($recordType, $gebruiker_id, $gerecht_id, $datum)";
-            mysqli_query($this->connection, $sql);
-        
+        $record_type = GERECHT_INFO_TYPE_FAVORIET;
+        $currentDateTime = date('Y-m-d');
+
+        $sql = "INSERT INTO gerecht_info (record_type, gerecht_id, gebruiker_id, datum) VALUES ('$record_type', '$gerecht_id' , '$gebruiker_id', '$currentDateTime')";
+
+        if ($this->connection->query($sql) === TRUE) {
+            return true;
+        } else {
+            return false;
+        }
     }
     public function removeFavorite($gebruiker_id, $gerecht_id)
     {
-        $sql = "DELETE FROM gerecht_info WHERE gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";
+        $sql = "DELETE FROM gerecht_info WHERE record_type = 'F' AND gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";
         mysqli_query($this->connection, $sql);
     }
 
     public function addRating($gerecht_id, $numeriekveld)
     {
-        $record_type = "W";
+        $record_type = GERECHT_INFO_TYPE_WAARDERING;
         $sql = "INSERT INTO gerecht_info (record_type, gerecht_id, numeriekveld) VALUES ('$record_type', '$gerecht_id', '$numeriekveld')";
 
         if ($this->connection->query($sql) === TRUE) {
@@ -72,7 +78,7 @@ class gerechtInfo
 
 
 
-            if ($gerechtInfo['record_type'] == "O" or $gerechtInfo['record_type'] == "F") {
+            if ($gerechtInfo['record_type'] == GERECHT_INFO_TYPE_OPMERKING || $gerechtInfo['record_type'] == GERECHT_INFO_TYPE_FAVORIET) {
 
                 $return[] = [
                     "id" => $gerechtInfo["id"],

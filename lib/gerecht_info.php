@@ -28,14 +28,17 @@ class gerechtInfo
         return ($gerechtInfo);
     }
 
-    public function addFavorite($recordType, $gebruiker_id, $gerecht_id, $datum)
+    public function determineFavorite($recordType, $gebruiker_id, $gerecht_id, $datum) {
+
+    }
+
+
+    public function addFavorite($gebruiker_id, $gerecht_id, $datum)
     {
-        if ($recordType == "F") {
+            $recordType = "F";
             $sql = "INSERT INTO gerecht_info (record_type, gebruiker_id, gerecht_id, datum) VALUES ($recordType, $gebruiker_id, $gerecht_id, $datum)";
             mysqli_query($this->connection, $sql);
-        } else {
-            return false;
-        }
+        
     }
     public function removeFavorite($gebruiker_id, $gerecht_id)
     {

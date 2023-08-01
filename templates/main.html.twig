@@ -42,7 +42,7 @@
 							}
 						});
 						console.log(`value: ${ value }`)
-						//const value = $(this).attr('data-value')
+						
 					},
 				},
 			})
@@ -50,6 +50,23 @@
          })
 
       })    
+
+	  	$("addFavoriteButton").click(function) {
+			const gerechtID = $(this).attr('heart-id');
+
+			$.ajax({
+				url:"./index.php",
+				method: "GET",
+				data: {
+						gerecht_id: gerechtID,
+						gebruiker_id: 
+				}
+
+
+
+
+			})
+		}
 		</script>
 	</head>
 </html>

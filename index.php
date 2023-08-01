@@ -37,7 +37,13 @@ $action = isset($_GET["action"]) ? $_GET["action"] : "homepage";
 
 switch ($action) {
 
-        
+        case "addFavorite": {
+                        $gebruiker_id = $_GET["gebruker_id"];
+                        $gerecht_id = ($_GET["gerecht_id"]);
+                        header('Content-Type: application/json; charset=utf-8');
+                        break;
+
+        }
 
         case "addRating": {
                         $numeriekveld = $_GET["numeriekveld"];

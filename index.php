@@ -46,7 +46,7 @@ switch ($action) {
                         }
 
                         header('Content-Type: application/json; charset=utf-8');
-                        echo json_encode(array('success' => $result));
+
                         exit();
 
                 }
@@ -55,7 +55,7 @@ switch ($action) {
                         $numeriekveld = $_GET["numeriekveld"];
                         $data = $gerechtInfo->addRating($gerecht_id, $numeriekveld);
                         header('Content-Type: application/json; charset=utf-8');
-                        echo json_encode(array('success' => $result));
+
                         exit();
 
                 }

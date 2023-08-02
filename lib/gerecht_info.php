@@ -35,8 +35,8 @@ class gerechtInfo
     public function bepaalFavoriet($gerecht_id, $gebruiker_id)
     {
 
-        $record_type = GERECHT_INFO_TYPE_FAVORIET;
-        $favorieten = ($this->selecteerGerechtInfo($record_type, $gerecht_id));
+
+        $favorieten = ($this->selecteerGerechtInfo($gerecht_id, "F"));
         foreach ($favorieten as $favoriet) {
             if ($favoriet['gerecht_id'] == $gerecht_id && $favoriet['gebruiker_id'] == $gebruiker_id) {
                 return true;
@@ -44,14 +44,14 @@ class gerechtInfo
         }
         return false;
     }
-
     public function updateFavoriet($gerecht_id, $gebruiker_id)
     {
 
         $record_type = GERECHT_INFO_TYPE_FAVORIET;
         $currentDateTime = date('Y-m-d');
 
-        $sql = "UPDATE gerecht_info SET `record_type`= `$record_type`, `gerecht_id` = `$gerecht_id`, `gebruiker_id` = `$gebruiker_id`, `datum` = `$currentDateTime`')";
+        $sql = "UPDATE gerecht_info SET `record_type` = '$record_type', `datum` = '$currentDateTime'
+            WHERE `gerecht_id` = '$gerecht_id' AND `gebruiker_id` = '$gebruiker_id'";
 
         if ($this->connection->query($sql) === TRUE) {
             return true;
@@ -76,7 +76,7 @@ class gerechtInfo
     {
         $record_type = GERECHT_INFO_TYPE_FAVORIET;
 
-        $sql = "DELETE FROM gerecht_info WHERE record_type = $record_type AND gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";
+        $sql = "DELETE FROM gerecht_info WHERE record_type = '$record_type' AND gebruiker_id = '$gebruiker_id' AND gerecht_id = '$gerecht_id'";
         mysqli_query($this->connection, $sql);
     }
 
@@ -92,17 +92,17 @@ class gerechtInfo
         }
     }
 
-    public function selecteerGerechtInfo($gerecht_id, $recordType)
+    public function selecteerGerechtInfo($gerecht_id, $record_type)
     {
 
-        $sql = "select * from gerecht_info where gerecht_id = $gerecht_id and record_type = '$recordType'";
+        $sql = "select * from gerecht_info where gerecht_id = $gerecht_id and record_type = '$record_type'";
         $result = mysqli_query($this->connection, $sql);
 
         $return = [];
 
         while ($gerechtInfo = mysqli_fetch_array($result)) {
 
-            $gebruiker = $this->getGebruiker($gerechtInfo['gebruiker_id'], MYSQLI_ASSOC);
+            $gebruiker = $this->getGebruiker($gerechtInfo['gebruiker_id']);
 
 
 
@@ -114,7 +114,7 @@ class gerechtInfo
                     "gerecht_id" => $gerechtInfo["gerecht_id"],
                     "opmerkingen" => $gerechtInfo["tekstveld"],
                     "datum" => $gerechtInfo["datum"],
-                    "gebruikerId" => $gebruiker["id"],
+                    "gebruiker_id" => $gebruiker["id"],
                     "gebruikersnaam" => $gebruiker["gebruikersnaam"],
                     "wachtwoord" => $gebruiker["wachtwoord"],
                     "email" => $gebruiker["email"],

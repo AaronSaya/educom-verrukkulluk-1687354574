@@ -51,7 +51,7 @@ class gerechtInfo
         $record_type = GERECHT_INFO_TYPE_FAVORIET;
         $currentDateTime = date('Y-m-d');
 
-        $sql = "UPDATE gerecht_info SET `record_type`= `$record_type`, `gerecht_id` = `$gerecht_id`, `gebruiker_id` = `$gebruiker_id`, `datum` = `$currentDateTime`";
+        $sql = "UPDATE gerecht_info SET `record_type`= `$record_type`, `gerecht_id` = `$gerecht_id`, `gebruiker_id` = `$gebruiker_id`, `datum` = `$currentDateTime`')";
 
         if ($this->connection->query($sql) === TRUE) {
             return true;

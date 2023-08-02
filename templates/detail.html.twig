@@ -34,32 +34,35 @@
 
 
 							<span class="icon">
-								<i class="fa fa-user-friends">
-									4</i>
+										<i class="fa fa-user-friends">
+										4</i>
+									</span>
+									<span class="icon">
+										<i class="fa fa-euro-sign">
+											{{ gerecht.totaalprijs }}
+										</i>
+									</span>
+									<span class="icon">
+									<i class="fa fa-fire">
+										{{ gerecht.totaalcalories }}
+									</i>
 							</span>
-							<span class="icon">
-								<i class="fa fa-euro-sign">
-									{{ gerecht.totaalprijs }}
-								</i>
-							</span>
-							<span class="icon"></i>
-							<i class="fa fa-fire">
-								{{ gerecht.totaalcalories }}
-							</i>
-						</span>
 						<div class="titel">
-							<h4>{{gerecht.gerechten.titel}}
-								{# <i data-ster={{gerecht.berekenWaardering}}></i> #}
-								 	 <span class="star" data-value="1">*</span>
-     								 <span class="star" data-value="2">*</span>
-    								 <span class="star" data-value="3">*</span>
-    								 <span class="star" data-value="4">*</span>
-   									  <span class="star" data-value="5">*</span>
-							</h4>
-							<h4>Keuken:</h4>
-							{{gerecht.keuken.omschrijving}}
-							<h4>Type:</h4>
-							{{gerecht.type.omschrijving}}</span>
+								<h4>{{gerecht.gerechten.titel}}
+									
+								 			 <span class="star" data-value="1" data-id={{ gerecht.gerechten.id}}>*</span>
+     										 <span class="star" data-value="2" data-id={{ gerecht.gerechten.id}}>*</span>
+    										 <span class="star" data-value="3" data-id={{ gerecht.gerechten.id}}>*</span>
+    										 <span class="star" data-value="4" data-id={{ gerecht.gerechten.id}}>*</span>
+   											 <span class="star" data-value="5" data-id={{ gerecht.gerechten.id}}>*</span>
+								</h4>
+
+									<span>
+									<h4>Keuken:</h4>
+										{{gerecht.keuken.omschrijving}}
+									<h4>Type:</h4>
+										{{gerecht.type.omschrijving}}
+									</span>
 					</div>
 					<div>
 						<p class="lange-omschrijving">
@@ -70,7 +73,7 @@
 							<button id="lijst" type="button">
 								Op Lijst!
 							</button>
-							<button id="heart" type="button">
+							<button class="updateFavoriet" id="heart" type="button" heart-id={{ gerecht.gerechten.id}} heart-gebruiker={{gerecht.gebruiker.id}}>
 								<i class="fa fa-heart"></i>
 							</button>
 						</div>
@@ -125,8 +128,8 @@
 					<ol>
 						{% for stap in gerecht.bereidingswijze %}
 
+							<i> {{stap.numeriekveld}}</i>
 							<li>
-
 								<span>
 									{{stap.tekstveld}}</br>
 							</li>

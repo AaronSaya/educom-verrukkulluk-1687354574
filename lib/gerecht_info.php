@@ -1,5 +1,9 @@
 <?php
 
+define("GERECHT_INFO_TYPE_BEREIDING", 'B');
+define("GERECHT_INFO_TYPE_OPMERKING", 'O');
+define("GERECHT_INFO_TYPE_FAVORIET", 'F');
+define("GERECHT_INFO_TYPE_WAARDERING", 'W');
 class gerechtInfo
 {
 
@@ -28,31 +32,65 @@ class gerechtInfo
         return ($gerechtInfo);
     }
 
-    public function addFavorite($recordType, $gebruiker_id, $gerecht_id, $datum)
+    public function bepaalFavoriet($gerecht_id, $gebruiker_id)
     {
-        if ($recordType == "F") {
-            $sql = "INSERT INTO gerecht_info (record_type, gebruiker_id, gerecht_id, datum) VALUES ($recordType, $gebruiker_id, $gerecht_id, $datum)";
-            mysqli_query($this->connection, $sql);
+
+        $record_type = GERECHT_INFO_TYPE_FAVORIET;
+        $favorieten = ($this->selecteerGerechtInfo($record_type, $gerecht_id));
+        foreach ($favorieten as $favoriet) {
+            if ($favoriet['gerecht_id'] == $gerecht_id && $favoriet['gebruiker_id'] == $gebruiker_id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function updateFavoriet($gerecht_id, $gebruiker_id)
+    {
+
+        $record_type = GERECHT_INFO_TYPE_FAVORIET;
+        $currentDateTime = date('Y-m-d');
+
+        $sql = "UPDATE gerecht_info SET `record_type`= `$record_type`, `gerecht_id` = `$gerecht_id`, `gebruiker_id` = `$gebruiker_id`, `datum` = `$currentDateTime`";
+
+        if ($this->connection->query($sql) === TRUE) {
+            return true;
         } else {
             return false;
         }
     }
-    public function removeFavorite($gebruiker_id, $gerecht_id)
+    public function addFavoriet($gerecht_id, $gebruiker_id)
     {
-        $sql = "DELETE FROM gerecht_info WHERE gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";
+        $record_type = GERECHT_INFO_TYPE_FAVORIET;
+        $currentDateTime = date('Y-m-d');
+
+        $sql = "INSERT INTO gerecht_info (record_type, gerecht_id, gebruiker_id, datum) VALUES ('$record_type', '$gerecht_id' , '$gebruiker_id', '$currentDateTime')";
+
+        if ($this->connection->query($sql) === TRUE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function verwijderFavoriet($gebruiker_id, $gerecht_id)
+    {
+        $record_type = GERECHT_INFO_TYPE_FAVORIET;
+
+        $sql = "DELETE FROM gerecht_info WHERE record_type = $record_type AND gebruiker_id = $gebruiker_id AND gerecht_id = $gerecht_id";
         mysqli_query($this->connection, $sql);
     }
 
-    public function addRating($recordType, $gebruiker_id, $gerecht_id, $numeriekveld)
+    public function addRating($gerecht_id, $numeriekveld)
     {
-        if ($recordType == "W") {
-            $sql = "INSERT INTO gerecht_info (record_type, gebruiker_id, gerecht_id, numeriekveld) VALUES ('$recordType','$gebruiker_id', '$gerecht_id', '$numeriekveld')";
-            mysqli_query($this->connection, $sql);
+        $record_type = GERECHT_INFO_TYPE_WAARDERING;
+        $sql = "INSERT INTO gerecht_info (record_type, gerecht_id, numeriekveld) VALUES ('$record_type', '$gerecht_id', '$numeriekveld')";
+
+        if ($this->connection->query($sql) === TRUE) {
+            return true;
         } else {
             return false;
         }
     }
-
 
     public function selecteerGerechtInfo($gerecht_id, $recordType)
     {
@@ -68,7 +106,7 @@ class gerechtInfo
 
 
 
-            if ($gerechtInfo['record_type'] == "O" or $gerechtInfo['record_type'] == "F") {
+            if ($gerechtInfo['record_type'] == GERECHT_INFO_TYPE_OPMERKING || $gerechtInfo['record_type'] == GERECHT_INFO_TYPE_FAVORIET) {
 
                 $return[] = [
                     "id" => $gerechtInfo["id"],

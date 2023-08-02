@@ -21,7 +21,7 @@ $db = new database();
 $connection = $db->getConnection();
 $gerecht = new gerecht($connection);
 $data = $gerecht->selecteerGerecht();
-
+$gerechtInfo = new gerechtInfo($connection);
 
 
 /*
@@ -29,33 +29,50 @@ URL:
 http://localhost/index.php?gerecht_id=4&action=detail
 */
 
+
 $gerecht_id = isset($_GET["gerecht_id"]) ? $_GET["gerecht_id"] : "";
-$gebruiker_id = isset($_GET["gebruiker_id"]) ? $_GET["gebruiker_id"] : "";
 $action = isset($_GET["action"]) ? $_GET["action"] : "homepage";
+
 
 
 switch ($action) {
 
-    case "homepage": {
-            $data = $gerecht->selecteerGerecht();
-            $template = 'homepage.html.twig';
-            $title = "homepage";
-            break;
-        }
+        case "update": {
+                        $gebruiker_id = $_GET["gebruiker_id"];
+                        if ($gerechtInfo->bepaalFavoriet($gerecht_id, $gebruiker_id)) {
+                                $gerechtInfo->verwijderFavoriet($gebruiker_id, $gerecht_id);
+                        } else {
+                                $data = $gerechtInfo->addFavoriet($gerecht_id, $gebruiker_id);
+                        }
 
-    case "detail": {
-            $data = $gerecht->selecteerGerecht($gerecht_id);
-            $template = 'detail.html.twig';
-            $title = "detail pagina";
-            break;
-        }
+                        header('Content-Type: application/json; charset=utf-8');
+                        echo json_encode(array('success' => $result));
+                        exit();
 
-        case "addRating" : {
-         
-          //  header('Content-Type: application/json; charset=utf-8');
-            break;
-    }
+                }
 
+        case "addRating": {
+                        $numeriekveld = $_GET["numeriekveld"];
+                        $data = $gerechtInfo->addRating($gerecht_id, $numeriekveld);
+                        header('Content-Type: application/json; charset=utf-8');
+                        echo json_encode(array('success' => $result));
+                        exit();
+
+                }
+
+        case "homepage": {
+                        $data = $gerecht->selecteerGerecht();
+                        $template = 'homepage.html.twig';
+                        $title = "homepage";
+                        break;
+                }
+
+        case "detail": {
+                        $data = $gerecht->selecteerGerecht($gerecht_id);
+                        $template = 'detail.html.twig';
+                        $title = "detail pagina";
+                        break;
+                }
 
 
 
@@ -64,4 +81,3 @@ switch ($action) {
 $template = $twig->load($template);
 
 echo $template->render(["titel" => $title, "data" => $data]);
-

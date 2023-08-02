@@ -22,154 +22,159 @@
 {% endblock %}
 
 {% block content %}
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
+			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-6">
-						{% for gerecht in data %}
-							<img id="image-card" src="{{gerecht.gerechten.afbeelding}}"/>
-						</div>
-						<div class="col-md-6">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-6">
+								{% for gerecht in data %}
+									<img id="image-card" src="{{gerecht.gerechten.afbeelding}}"/>
+								</div>
+								<div class="col-md-6">
 
 
-							<span class="icon">
-										<i class="fa fa-user-friends">
-										4</i>
-									</span>
 									<span class="icon">
-										<i class="fa fa-euro-sign">
-											{{ gerecht.totaalprijs }}
-										</i>
+												<i class="fa fa-user-friends">
+												4</i>
+											</span>
+											<span class="icon">
+												<i class="fa fa-euro-sign">
+													{{ gerecht.totaalprijs }}
+												</i>
+											</span>
+											<span class="icon">
+											<i class="fa fa-fire">
+												{{ gerecht.totaalcalories }}
+											</i>
 									</span>
-									<span class="icon">
-									<i class="fa fa-fire">
-										{{ gerecht.totaalcalories }}
-									</i>
-							</span>
-						<div class="titel">
-								<h4>{{gerecht.gerechten.titel}}
-									
-								 			 <span class="star" data-value="1" data-id={{ gerecht.gerechten.id}}>*</span>
-     										 <span class="star" data-value="2" data-id={{ gerecht.gerechten.id}}>*</span>
-    										 <span class="star" data-value="3" data-id={{ gerecht.gerechten.id}}>*</span>
-    										 <span class="star" data-value="4" data-id={{ gerecht.gerechten.id}}>*</span>
-   											 <span class="star" data-value="5" data-id={{ gerecht.gerechten.id}}>*</span>
-								</h4>
+								<div class="titel">
+												<h4>{{gerecht.gerechten.titel}}
+											
+													<span class="star" data-value="1" data-id={{ gerecht.gerechten.id}}>*</span>
+													<span class="star" data-value="2" data-id={{ gerecht.gerechten.id}}>*</span>
+													<span class="star" data-value="3" data-id={{ gerecht.gerechten.id}}>*</span>
+													<span class="star" data-value="4" data-id={{ gerecht.gerechten.id}}>*</span>
+													<span class="star" data-value="5" data-id={{ gerecht.gerechten.id}}>*</span>
+												</h4>
 
-									<span>
-									<h4>Keuken:</h4>
-										{{gerecht.keuken.omschrijving}}
-									<h4>Type:</h4>
-										{{gerecht.type.omschrijving}}
-									</span>
-					</div>
-					<div>
-						<p class="lange-omschrijving">
-							{{gerecht.gerechten.lange_omschrijving}}
-						</p>
-						<div class="btn-group">
+												<span>
+												<h4>Keuken:</h4>
+													{{gerecht.keuken.omschrijving}}
+												<h4>Type:</h4>
+													{{gerecht.type.omschrijving}}
+												</span>
+							</div>
 
-							<button id="lijst" type="button">
-								Op Lijst!
-							</button>
-							<button class="updateFavoriet" id="heart" type="button" heart-id={{ gerecht.gerechten.id}} heart-gebruiker={{gerecht.gebruiker.id}}>
-								<i class="fa fa-heart"></i>
-							</button>
-						</div>
-					</div>
+							<div>
+								<p class="lange-omschrijving">
+									{{gerecht.gerechten.lange_omschrijving}}
+								</p>
+								<div class="btn-group">
+									<button id="lijst" type="button">
+										<a href="http://localhost/educom-verrukkulluk/index.php?action=boodschappenlijst&gerecht_id={{gerecht.gerechten.id}}">Op Lijst!</a>
+									</button>
 
+									<button class="updateFavoriet" id="heart" type="button" heart-id={{ gerecht.gerechten.id}} heart-gebruiker={{gerecht.gebruiker.id}}>
+										<i class="fa fa-heart"></i>
+									</button>
+								</div>
+							</div>
+						</div>			
 				</div>
-			
-		</div>
-	</div>
-	<div class="row">
-<div class="col-md-12">
-	<div class="tabs">
-		<input type="radio" id="tab1" name="tabs" checked="checked">
-		<label for="tab1">1</label>
-		<div class="tab">
-			<div class="menu-detail">
-
-				
-					<ul>
-						{% for ingr in gerecht.ingredienten %}
-
-							<li>
-								<img id="foto" src="{{ingr.artikel_afbeelding}}"><br>
-								<span>
-									{{ingr.naam_artikel}}
-								</span><br>
-								<span>
-									{{ingr.omschrijving}}
-								</span><br>
-								<span>
-									{{ingr.hoeveelheid}}
-								</span>
-								<span>
-									{{ingr.eenheid}}
-								</span><br>
-							</li>
-
-						{% endfor %}
-					</ul>
-				
-
 			</div>
+			<div class="row">
+							<div class="col-md-12">
+								<div class="tabs">
+									<input type="radio" id="tab1" name="tabs" checked="checked">
+									<label for="tab1">1</label>
+									<div class="tab">
+										<div class="menu-detail">										
+												<ul>
+													{% for ingr in gerecht.ingredienten %}
+
+														<li>
+															<img id="foto" src="{{ingr.artikel_afbeelding}}"><br>
+															<span>
+																{{ingr.naam_artikel}}
+															</span><br>
+															<span>
+																{{ingr.omschrijving}}
+															</span><br>
+															<span>
+																{{ingr.hoeveelheid}}
+															</span>
+															<span>
+																{{ingr.eenheid}}
+															</span><br>
+														</li>
+
+													{% endfor %}
+												</ul>									
+										</div>
+									</div>
+
+									<input type="radio" id="tab2" name="tabs">
+									<label for="tab2">2</label>
+									<div class="tab">
+
+										<div class="menu-detail">
+
+											
+												<ol>
+													{% for stap in gerecht.bereidingswijze %}
+
+														<i> {{stap.numeriekveld}}</i>
+														<li>
+															<span>
+																{{stap.tekstveld}}</br>
+														</li>
+													</span><br>
+
+												</li>
+
+											{% endfor %}
+										</ol>
+									
+
+								</div>
+
+							</div>
+
+							<input type="radio" id="tab3" name="tabs">
+							<label for="tab3">3</label>
+							<div class="tab">
+
+								<div class="menu-detail">
+
+									
+										<ol>
+											{% for opmerking in gerecht.opmerkingen %}
+
+												<li>
+													<span>
+														<img src="{{opmerking.foto_gebruiker}}"></br>
+												</li>
+											</span>
+											<br>
+												<span>{{opmerking.gebruikersnaam}}</span>
+											</br>
+											<span>
+												{{opmerking.opmerkingen}}
+											</span><br>
+
+										</li>
+
+									{% endfor %}
+								</ol>
+						{% endfor %}
+				       </div>
+				     </div>
+				  </div>
+				</div>
+			</div>
+		  </div>
 		</div>
-
-		<input type="radio" id="tab2" name="tabs">
-		<label for="tab2">2</label>
-		<div class="tab">
-
-			<div class="menu-detail">
-
-				
-					<ol>
-						{% for stap in gerecht.bereidingswijze %}
-
-							<i> {{stap.numeriekveld}}</i>
-							<li>
-								<span>
-									{{stap.tekstveld}}</br>
-							</li>
-						</span><br>
-
-					</li>
-
-				{% endfor %}
-			</ol>
-		
-
-	</div>
-
+	 </div>
+  </div>
 </div>
-
-<input type="radio" id="tab3" name="tabs">
-<label for="tab3">3</label>
-<div class="tab">
-
-	<div class="menu-detail">
-
-		
-			<ol>
-				{% for opmerking in gerecht.opmerkingen %}
-
-					<li>
-						<span>
-							<img src="{{opmerking.foto_gebruiker}}"></br>
-					</li>
-				</span>
-				<br>
-					<span>{{opmerking.gebruikersnaam}}</span>
-				</br>
-				<span>
-					{{opmerking.opmerkingen}}
-				</span><br>
-
-			</li>
-
-		{% endfor %}
-	</ol>
-{% endfor %}</div></div></div></div></div></div></div></div>
-</div></div>{% endblock %}
+{% endblock %}

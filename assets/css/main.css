@@ -461,3 +461,30 @@ li {
   [data-star^="4.8"]::after{width:96%}
   [data-star^="4.9"]::after{width:98%}
   [data-star^="5"]::after{width:100%}
+
+/*BOODSCHAPPEN*/
+
+.scroll-container {
+    max-height: 200px; 
+    border: 1px solid #ccc; 
+    padding: 10px; 
+  }
+  
+  .scroll-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .scroll-list li {
+    padding: 5px 0; 
+  }
+
+  .card-body {
+    overflow-y: auto;
+  }
+  
+.artikelNaam {
+    font-family: 'pretty_lilyregular';
+    font-size: xx-large;
+    color:#6e8722;
+}

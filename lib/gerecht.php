@@ -77,18 +77,6 @@ class gerecht
         return $gemiddeldWaardering;
     }
 
-    private function bepaalFavoriet($favorieten, $gerecht)
-    {
-        foreach ($favorieten as $favoriet) {
-            if ($favoriet["id"] == $gerecht["id"] and $favoriet["gebruikerId"] == $gerecht["gebruiker_id"]) {
-
-                return true;
-            }
-
-        }
-        return false;
-    }
-
     public function selecteerGerecht($id = null)
     {
         $sql = "SELECT * FROM gerecht";

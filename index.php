@@ -7,7 +7,7 @@ require_once("lib/gebruiker.php");
 require_once("lib/keukentype.php");
 require_once("lib/ingrediënt.php");
 require_once("lib/gerecht_info.php");
-require_once("lib/boodschappenlijst.php");
+require_once("lib/boodschappen.php");
 
 
 

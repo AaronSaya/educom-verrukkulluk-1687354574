@@ -23,14 +23,15 @@
 {%  block content %}
             <div class="container-fluid" class="scroll-container">
                         <div class="row">
-                            <div class="col-md-9">             
+                            <div class="col-md-9">  
+                            {% for boodschapen in data %}            
                              <div class="card">
                                  <h5 class="card-header">
                                      Boodschappen
                                 </h5>
                             <div class="card-body">
                                 <ul class="scroll-list">              
-													{% for ingredient in data %}                                                
+												{% for ingredient in boodschap.ingredienten %}                                        
 														<li>
                                                         <table class="table">
                                                         <tr>
@@ -42,20 +43,27 @@
 																{{ingredient.omschrijving}}
 															</td><br>
 															<td>
-																{{ingredient.hoeveelheid}}
+																<input type="number" name="hoeveelheid_artikelen" placeholder="{{gerecht.benodigde_hoeveelheid}}";>
 															</td>
 															<td>
-																{{ingredient.eenheid}}
+																{{ingredient.prijs}}
 															</td><br>
+                                                            <td>
+                                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                                            </td><br>
+                                                            <td>
+                                                             <i class="fa fa-trash"></i>
+                                                            </td>
                                                         </tr>
                                                             </table>
 														</li>                                                
-													{% endfor %}                                  
+													 {% endfor %}                              
 												</ul>									
                             </div>
                             <div class="card-footer">
-                                Totaal
-                            </div>                      
+                                Totaal {{ gerecht.totaalprijs }}
+                            </div>           
+                            {% endfor %}            
                         </div>                   
                     </div>
                 </div>

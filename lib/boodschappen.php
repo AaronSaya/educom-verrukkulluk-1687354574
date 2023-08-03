@@ -42,18 +42,18 @@ class Boodschappen
         return false;
     }
 
-    private function bijwerkenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheid)
+    private function bijwerkenBoodschappen($artikel_id, $gebruiker_id)
     {
         $bijwerken =  $this->artikelOpLijst($artikel_id, $gebruiker_id);
 
-        $nieuweHoeveelheid = ($bijwerken['hoeveelheid_ingredient'] + ($hoeveelheid)) / $bijwerken["hoeveelheid_verpakking"];
+        $nieuweHoeveelheid = $bijwerken['hoeveelheid_ingredient'] + $bijwerken["hoeveelheid_verpakking"];
         $nieuweHoeveelheid = ceil($nieuweHoeveelheid);
 
         $sql = "UPDATE boodschappenlijst SET aantal_artikel = $nieuweHoeveelheid WHERE id = $bijwerken[id];";
         $this->connection->query($sql);
     }
 
-    private function toevoegenBoodschappen($artikel_id, $gebruiker_id, $nieuwAantal)
+    private function toevoegenBoodschappen($artikel_id, $gebruiker_id)
     {
         $toevoegen =  $this->artikelOpLijst($artikel_id, $gebruiker_id);
         $nieuwAantal = $toevoegen["hoeveelheid_ingredient"] / $toevoegen["hoeveelheid_verpakking"];
@@ -70,11 +70,10 @@ class Boodschappen
 
         foreach ($ingredienten as $ingredient) {
             $artikel_id = $ingredient["artikel_id"];
-            $hoeveelheid = $ingredient["hoeveelheid"];
             if ($this->artikelOpLijst($ingredient["artikel_id"], $gebruiker_id)) {
-                $this->bijwerkenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheid);
+                $this->bijwerkenBoodschappen($artikel_id, $gebruiker_id);
             } else {
-                $this->toevoegenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheid);
+                $this->toevoegenBoodschappen($artikel_id, $gebruiker_id);
             }
         }
     }

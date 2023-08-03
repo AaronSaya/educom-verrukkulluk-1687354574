@@ -23,6 +23,7 @@ $gerecht = new gerecht($connection);
 $data = $gerecht->selecteerGerecht();
 $gerechtInfo = new gerechtInfo($connection);
 $ingredient = new ingrediënt($connection);
+$boodschappen = new boodschappen($connection);
 
 /*
 URL:
@@ -75,7 +76,8 @@ switch ($action) {
                 }
 
         case "boodschappenlijst": {
-                        $data = $ingredient->selecteerIngrediënt($gerecht_id);
+                        $gebruiker_id = $_GET["gebruiker_id"];
+                        $data = $boodschappen->selecteerBoodschappen($gebruiker_id);
                         $template = 'boodschappenlijst.html.twig';
                         $title = 'boodschappenlijst';
                         break;

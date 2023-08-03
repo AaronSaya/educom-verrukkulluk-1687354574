@@ -37,41 +37,41 @@
 								<div class="col-md-12">
 									<div class="card">
 										<li>
-
 											{#IMAGE#}
 											<img class="card-img-top" src="{{gerecht.gerechten.afbeelding}}">
 
-											<div
-												class="content">
-												{#DATUM#}
-												<span>Datum:
-													{{gerecht.gerechten.datum_toegevoegd}}</span><br>
+													<div
+														class="content">
+														{#DATUM#}
+														<span>Datum:
+															{{gerecht.gerechten.datum_toegevoegd}}</span><br>
 
-												{#GEBRUIKER#}
-												<span>User:
-													{{gerecht.gebruiker.gebruikersnaam}}</span><br>
+														{#GEBRUIKER#}
+														<span>User:
+															{{gerecht.gebruiker.gebruikersnaam}}</span><br>
 
-												{#KEUKEN#}
-												<h4>Keuken:
-													{{gerecht.keuken.omschrijving}}
-													Type:
-													{{gerecht.type.omschrijving}}</h4>
+														{#KEUKEN#}
+														<h4>Keuken:
+															{{gerecht.keuken.omschrijving}}
+															Type:
+															{{gerecht.type.omschrijving}}</h4>
 
-												{#TYPE#}
-												<span>Type:
-													{{gerecht.type.omschrijving}}</span><br>
+														{#TYPE#}
+														<span>Type:
+															{{gerecht.type.omschrijving}}</span><br>
 
-												{#TITEL#}
-												<h4>{{ gerecht.gerechten.titel }}<h4>
+														{#TITEL#}
+														<h4>{{ gerecht.gerechten.titel }}<h4>
 
-														{#OMSCHRIJVING#}
-														<span class="omschrijving">{{gerecht.gerechten.korte_omschrijving}}</span><br>
-														
-														{#WAARDERING#}
-														<span data-star={{gerecht.berekenWaardering}}>Waardering</span><br>
+																{#OMSCHRIJVING#}
+																<span class="omschrijving">{{gerecht.gerechten.korte_omschrijving}}</span><br>
+																
+																{#WAARDERING#}
+																<span data-ster={{gerecht.berekenWaardering}}>Waardering</span><br>
 													</div>
-													<ul>
+									    </li>
 
+													<ul>
 														<div class="info">
 															<a href="/educom-verrukkulluk/index.php?action=detail&gerecht_id={{gerecht.gerechten.id}}">
 																smullen!
@@ -87,17 +87,15 @@
 																</i>
 															</div>
 														</div>
-													</li>
-												</div>
-											</li>
-										</li>
-									</div>
+													</ul>
+										  </div>											
+									 </div>
 								{% endfor %}
-							</ul>
+							</ul>					
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+	</div>
 		{# Dump <pre> {{ dump(data) }} </pre> #}
 	{% endblock %}

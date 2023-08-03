@@ -77,6 +77,7 @@ class gerecht
         return $gemiddeldWaardering;
     }
 
+
     public function selecteerGerecht($id = null)
     {
         $sql = "SELECT * FROM gerecht";
@@ -104,8 +105,8 @@ class gerecht
             $ingredienten = $this->getIngrediënt($gerechtId);
             $totaalPrijs = $this->totaalPrijs($ingredienten);
             $totaalCalories = $this->totaalCalorie($ingredienten);
-            $bepaalFavoriet = $this->bepaalFavoriet($favorieten, $gerecht);
             $berekenWaardering = $this->berekenWaardering($waarderingen);
+
 
             $return[] = [
                 "gerechten" => $gerecht,
@@ -119,7 +120,6 @@ class gerecht
                 "ingredienten" => $ingredienten,
                 "totaalprijs" => $totaalPrijs,
                 "totaalcalories" => $totaalCalories,
-                "bepaalFavoriet" => $bepaalFavoriet,
                 "berekenWaardering" => $berekenWaardering,
 
             ];

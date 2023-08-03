@@ -1,20 +1,25 @@
 <?php
 
-class keukenType {
+class keukenType
+{
 
     private $connection;
 
-    public function __construct($connection) {
+    public function __construct($connection)
+    {
         $this->connection = $connection;
     }
 
-    public function selecteerKeukenType($keuken) {
+    public function selecteerKeukenType($keuken)
+    {
 
-    $sql = "SELECT * FROM keuken_type WHERE id = $keuken";
+        $keuken = mysqli_real_escape_string($this->connection, $keuken);
 
-    $result = mysqli_query($this->connection, $sql);
-    $keuken = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        $sql = "SELECT * FROM keuken_type WHERE id = $keuken";
 
-    return($keuken);
+        $result = mysqli_query($this->connection, $sql);
+        $keuken = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+        return ($keuken);
     }
 }

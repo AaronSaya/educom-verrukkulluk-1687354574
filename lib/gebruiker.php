@@ -1,21 +1,26 @@
 <?php
 
-class gebruiker {
+class gebruiker
+{
 
-     private $connection;
+    private $connection;
 
-    public function __construct($connection) {
+    public function __construct($connection)
+    {
         $this->connection = $connection;
     }
 
-    public function selecteerGebruiker($gebruiker_id) {
+    public function selecteerGebruiker($gebruiker_id)
+    {
+
+        $gebruiker_id = mysqli_real_escape_string($this->connection, $gebruiker_id);
 
         $sql = "SELECT * FROM gebruiker WHERE id = $gebruiker_id";
 
         $result = mysqli_query($this->connection, $sql);
         $gebruiker = mysqli_fetch_array($result, MYSQLI_ASSOC);
-        
-        return($gebruiker);
+
+        return ($gebruiker);
     }
 
 

@@ -80,6 +80,8 @@ class gerecht
 
     public function selecteerGerecht($id = null)
     {
+        $id = mysqli_real_escape_string($this->connection, $id);
+
         $sql = "SELECT * FROM gerecht";
 
         if ($id !== null) {

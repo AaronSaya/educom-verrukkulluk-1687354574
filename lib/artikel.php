@@ -1,27 +1,31 @@
 <?php
 
-class artikel {
+class artikel
+{
 
     private $connection;
-   
-   
 
-    public function __construct($connection) {
+
+
+    public function __construct($connection)
+    {
         $this->connection = $connection;
-       
+
     }
-  
-    public function selecteerArtikel($artikel_id) {
+
+    public function selecteerArtikel($artikel_id)
+    {
+        $artikel_id = mysqli_real_escape_string($this->connection, $artikel_id);
 
         $sql = "select * from artikel where id = $artikel_id";
-       
+
         $result = mysqli_query($this->connection, $sql);
         $artikel = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-        return($artikel);
+        return ($artikel);
 
     }
 
-    
+
 
 }

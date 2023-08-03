@@ -80,26 +80,25 @@ class gerecht
 
     public function selecteerGerecht($id = null)
     {
-        $id = mysqli_real_escape_string($this->connection, $id);
-
         $sql = "SELECT * FROM gerecht";
-
+    
         if ($id !== null) {
-            $sql .= " WHERE id = $id";
+            $id = mysqli_real_escape_string($this->connection, $id);
+            $sql .= " WHERE id = '$id'";
         }
-
+    
         $result = mysqli_query($this->connection, $sql);
         $gerechten = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
+    
         $return = [];
-
+    
         foreach ($gerechten as $gerecht) {
             $keuken = $this->getKeukenType($gerecht['keuken_id']);
             $type = $this->getKeukenType($gerecht['type_id']);
             $gebruiker = $this->getGebruiker($gerecht['gebruiker_id']);
-
+    
             $gerechtId = $gerecht['id'];
-
+    
             $bereidingswijze = $this->getGerechtInfo($gerechtId, "B");
             $favorieten = $this->getGerechtInfo($gerechtId, "F");
             $opmerkingen = $this->getGerechtInfo($gerechtId, "O");
@@ -108,8 +107,7 @@ class gerecht
             $totaalPrijs = $this->totaalPrijs($ingredienten);
             $totaalCalories = $this->totaalCalorie($ingredienten);
             $berekenWaardering = $this->berekenWaardering($waarderingen);
-
-
+    
             $return[] = [
                 "gerechten" => $gerecht,
                 "keuken" => $keuken,
@@ -123,12 +121,12 @@ class gerecht
                 "totaalprijs" => $totaalPrijs,
                 "totaalcalories" => $totaalCalories,
                 "berekenWaardering" => $berekenWaardering,
-
             ];
         }
-
+    
         return $return;
     }
+    
 
 
 }

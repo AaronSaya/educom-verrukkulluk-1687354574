@@ -1,33 +1,32 @@
 <?php
 
-
 class Boodschappen
 {
-
     private $connection;
     private $ingrediënten;
-
 
     public function __construct($connection)
     {
         $this->connection = $connection;
-        $this->ingrediënten = new ingrediënt($connection);
+        $this->ingrediënten = new Ingrediënt($connection);
     }
 
     private function getIngrediënt($gerecht_id)
     {
         $gerecht_id = mysqli_real_escape_string($this->connection, $gerecht_id);
-
-        return ($this->ingrediënten->selecteerIngrediënt($gerecht_id));
+        return $this->ingrediënten->selecteerIngrediënt($gerecht_id);
     }
 
     public function selecteerBoodschappen($gebruiker_id)
     {
         $gebruiker_id = mysqli_real_escape_string($this->connection, $gebruiker_id);
-
-        $sql = "SELECT * FROM boodschappenlijst WHERE gebruiker_id = $gebruiker_id";
+        $sql = "SELECT * FROM boodschappenlijst WHERE gebruiker_id = '$gebruiker_id'";
         $result = mysqli_query($this->connection, $sql);
-        $boodschappen = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $boodschappen = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $boodschappen[] = $row;
+        }
 
         return $boodschappen;
     }
@@ -37,18 +36,18 @@ class Boodschappen
         $artikel_id = mysqli_real_escape_string($this->connection, $artikel_id);
         $gebruiker_id = mysqli_real_escape_string($this->connection, $gebruiker_id);
 
-        $boodschappen = $this->selecteerBoodschappen($gebruiker_id);
+        $sql = "SELECT * FROM boodschappenlijst WHERE gebruiker_id = '$gebruiker_id' AND artikel_id = '$artikel_id' LIMIT 1";
+        $result = mysqli_query($this->connection, $sql);
+        $boodschap = mysqli_fetch_assoc($result);
 
-        foreach ($boodschappen as $boodschap) {
-            if ($boodschap["artikel_id"] == $artikel_id) {
-                return $boodschap;
-            }
-        }
-        return false;
+        return $boodschap ? $boodschap : false;
     }
 
     private function bijwerkenBoodschappen($artikel_id, $gebruiker_id)
     {
+        $artikel_id = mysqli_real_escape_string($this->connection, $artikel_id);
+        $gebruiker_id = mysqli_real_escape_string($this->connection, $gebruiker_id);
+
         $bijwerken = $this->artikelOpLijst($artikel_id, $gebruiker_id);
 
         $nieuweHoeveelheid = $bijwerken['hoeveelheid_ingredient'] + $bijwerken["hoeveelheid_verpakking"];
@@ -63,7 +62,6 @@ class Boodschappen
         $artikel_id = mysqli_real_escape_string($this->connection, $artikel_id);
         $gebruiker_id = mysqli_real_escape_string($this->connection, $gebruiker_id);
 
-
         $toevoegen = $this->artikelOpLijst($artikel_id, $gebruiker_id);
         $nieuwAantal = $toevoegen["hoeveelheid_ingredient"] / $toevoegen["hoeveelheid_verpakking"];
         $nieuwAantal = ceil($nieuwAantal);
@@ -74,18 +72,18 @@ class Boodschappen
 
     public function addBoodschappen($gerecht_id, $gebruiker_id)
     {
-        $gerecht_id = mysqli_real_escape_string($this->connection, $gerecht_id);
-        $gebruiker_id = mysqli_real_escape_string($this->connection, $gebruiker_id);
-
         $ingredienten = $this->getIngrediënt($gerecht_id);
-
+    
         foreach ($ingredienten as $ingredient) {
             $artikel_id = $ingredient["artikel_id"];
-            if ($this->artikelOpLijst($ingredient["artikel_id"], $gebruiker_id)) {
+            $existingBoodschap = $this->artikelOpLijst($artikel_id, $gebruiker_id);
+    
+            if ($existingBoodschap) {
                 $this->bijwerkenBoodschappen($artikel_id, $gebruiker_id);
             } else {
                 $this->toevoegenBoodschappen($artikel_id, $gebruiker_id);
             }
         }
     }
+    
 }

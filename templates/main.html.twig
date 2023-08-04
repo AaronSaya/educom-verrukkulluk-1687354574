@@ -50,7 +50,7 @@
     $(".updateFavoriet").click(function() {
       const heartID = $(this).attr('heart-id');
       const heartGebruiker = $(this).attr('heart-gebruiker');
-	const datum = 
+	 
       $.ajax({
         url: "./index.php",
         method: "GET",
@@ -67,7 +67,32 @@
         }
       });
     });
+
+	  $(".lijst").click(function() { 
+		const lijstGebruiker = $(this).attr("data-gebruiker");
+		const lijstGerecht =$(this).attr("data-gerecht");
+
+		$.ajax({
+			url: "./index.php",
+			method: "GET",
+			data: {
+				gebruiker_id: lijstGebruiker,
+				gebruiker_id: lijstGerecht,
+				action: "boodschappenlijst",
+			},
+
+			 success: function() {
+          console.log(`gebruiker_id: ${lijstGebruiker}`);
+          console.log("success");
+        }
+
+
+
+		});
+	
   });
+
+});
 </script>
 
 

@@ -17,20 +17,20 @@ $twig = new \Twig\Environment($loader, ["debug" => true]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 
-$db = new database();
+$db = new Database();
 $connection = $db->getConnection();
-$gerecht = new gerecht($connection);
+$gerecht = new Gerecht($connection);
 $data = $gerecht->selecteerGerecht();
-$gerechtInfo = new gerechtInfo($connection);
-$ingredient = new ingrediënt($connection);
-$boodschappen = new boodschappen($connection);
+$gerechtInfo = new GerechtInfo($connection);
+$ingredient = new Ingrediënt($connection);
+$boodschappen = new Boodschappen($connection);
 
 /*
 URL:
 http://localhost/index.php?gerecht_id=4&action=detail
 */
 
-
+$artikel_id = isset($_GET["artikel_id"]) ? $_GET["artikel_id"] : "";
 $gerecht_id = isset($_GET["gerecht_id"]) ? $_GET["gerecht_id"] : "";
 $action = isset($_GET["action"]) ? $_GET["action"] : "homepage";
 
@@ -76,8 +76,12 @@ switch ($action) {
                 }
 
         case "boodschappenlijst": {
+                        $artikel_id = $_GET["artikel_id"];
                         $gebruiker_id = $_GET["gebruiker_id"];
-                        $data = $boodschappen->selecteerBoodschappen($gebruiker_id);
+                        $boodschappen ->selecteerBoodschappen($gebruiker_id);
+                        while($boodschappen->artikelOpLijst($artikel_id, $gebruiker_id)) {
+                                $boodschappen->addBoodschappen($gerecht_id, $gebruiker_id);
+                        }
                         $template = 'boodschappenlijst.html.twig';
                         $title = 'boodschappenlijst';
                         break;

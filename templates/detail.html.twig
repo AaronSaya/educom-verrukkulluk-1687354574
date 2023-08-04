@@ -67,8 +67,8 @@
                                 {{ gerecht.gerechten.lange_omschrijving }}
                             </p>
                             <div class="btn-group">
-                                <button title="lijst" type="button" data-lijst="OpLijst">
-                                   <a href="http://localhost/educom-verrukkulluk/index.php?action=boodschappenlijst&gerecht_id={{ gerecht.gerechten.id }}&gebruiker_id={{ gebruiker_id }}" target="_blank">Op Lijst!</a>
+                                <button class="lijst" type="button" data-gebruiker={{gerecht.gerechten.gebruiker_id}} data-gerecht={{gerecht.gerechten.id}}>
+                                   <a href="http://localhost/educom-verrukkulluk/index.php?action=boodschappenlijst&gerecht_id={{ gerecht.gerechten.id }}&gebruiker_id={{ gerecht.gerechten.gebruiker_id }}&artikel_id={{gerecht.ingrediënt.artikel_id}}" target="_blank">Op Lijst!</a>
                                 </button>
 
                                 <button class="updateFavoriet" id="heart" type="button" heart-id={{ gerecht.gerechten.id }} heart-gebruiker={{ gerecht.gebruiker.id }}>

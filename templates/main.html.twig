@@ -29,9 +29,6 @@
           gerecht_id: gerechtID,
           numeriekveld: value,
           action: 'addRating',
-        
-        
-
         success: function() {
           $(this).addClass("red");
           $(".star").removeClass('red');
@@ -59,8 +56,6 @@
           gebruiker_id: heartGebruiker,
           action: 'favoriet',
         },
-        
-
         success: function() {
           console.log(`gerecht_id: ${heartID}, gebruiker_id: ${heartGebruiker}`);
           console.log("success");
@@ -68,29 +63,26 @@
       });
     });
 
-	  $(".lijst").click(function() { 
-		const lijstGebruiker = $(this).attr("data-gebruiker");
-		const lijstGerecht =$(this).attr("data-gerecht");
+
+	$(".deleteArtikel").click(function() {
+		const artikelId = $(this).attr("artikelID");
+		const gebruikerId = $(this).attr("gebruikerID");	
 
 		$.ajax({
 			url: "./index.php",
 			method: "GET",
 			data: {
-				gebruiker_id: lijstGebruiker,
-				gebruiker_id: lijstGerecht,
-				action: "boodschappenlijst",
+				artikel_id: artikelId,
+				gebruiker_id: gebruikerId,
+				action: "delete",
 			},
-
 			 success: function() {
-          console.log(`gebruiker_id: ${lijstGebruiker}`);
-          console.log("success");
-        }
-
-
-
+         	 console.log(`artikel_id: ${artikelId}, gebruiker_id: ${gebruikerId}`);
+         	 console.log("success");
+			 }
 		});
-	
-  });
+
+	});
 
 });
 </script>

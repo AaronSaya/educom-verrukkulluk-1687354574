@@ -24,48 +24,52 @@
             <div class="container-fluid" class="scroll-container">
                         <div class="row">
                             <div class="col-md-9">  
-                            {% for gerecht in data %}            
+                                     
                              <div class="card">
                                  <h5 class="card-header">
                                      Boodschappen
                                 </h5>
                             <div class="card-body">
-                                <ul class="scroll-list">              
-												{% for ingredient in gerecht.ingredienten %}                                        
+                                <ul class="scroll-list">     
+                                 {% for artikelen in data %}           											                                       
 														<li>
                                                         <table class="table">
                                                         <tr>
                                                           <td>
-															<img id="foto" src="{{ingredient.artikel_afbeelding}}"><br>
+															<img id="foto" src="{{artikelen.artikel_afbeelding}}"><br>
                                                             </td>
 															<td>
-                                                            <span class="artikelNaam">{{ingredient.naam_artikel}}</span><br>
-																{{ingredient.omschrijving}}
+                                                            <span class="artikelNaam">{{artikelen.naam_artikel}}</span><br>
+																{{artikelen.omschrijving}}
 															</td><br>
 															<td>
-																<input type="number" name="hoeveelheid_artikelen" placeholder="{{gerecht.benodigde_hoeveelheid}}";>
+																<input type="number" name="hoeveelheid_artikelen" placeholder="{{artikelen.aantal_artikel}}";>
 															</td>
 															<td>
-																{{ingredient.prijs}}
+																{{artikelen.prijs}}
 															</td><br>
                                                             <td>
                                                             <i class="fa fa-check" aria-hidden="true"></i>
                                                             </td><br>
                                                             <td>
+                                                                <button class="deleteArtikel" artikelID ={{artikelen.id}} gebruikerID={{artikelen.gebruiker_id}}>
                                                              <i class="fa fa-trash"></i>
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                             </table>
-														</li>                                                
-													 {% endfor %}                              
-												</ul>									
-                            </div>
-                            <div class="card-footer">
-                                Totaal {{ gerecht.totaalprijs }}
-                            </div>           
-                            {% endfor %}            
-                        </div>                   
-                    </div>
+														</li>                                                                                      
+                                   {% endfor %}
+                                                        <div class="card-footer">
+                                                                        Totaal {{ totalePrijs|number_format(2, ',', '') }}
+                                                                            <button class="deleteArtikel" artikelID = "" gebruikerID="">
+                                                             <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </div> 
+								</ul>									
+                         </div>      
+                    </div>                   
                 </div>
-            </div>
+             </div>
+         </div>
 {%  endblock %}

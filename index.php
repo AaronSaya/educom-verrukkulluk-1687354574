@@ -17,20 +17,20 @@ $twig = new \Twig\Environment($loader, ["debug" => true]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 
-$db = new Database();
+$db = new database();
 $connection = $db->getConnection();
-$gerecht = new Gerecht($connection);
+$gerecht = new gerecht($connection);
 $data = $gerecht->selecteerGerecht();
-$gerechtInfo = new GerechtInfo($connection);
-$ingredient = new Ingrediënt($connection);
-$boodschappen = new Boodschappen($connection);
+$gerechtInfo = new gerechtInfo($connection);
+$ingredient = new ingrediënt($connection);
+$boodschappen = new boodschappen($connection);
 
 /*
 URL:
 http://localhost/index.php?gerecht_id=4&action=detail
 */
 
-$artikel_id = isset($_GET["artikel_id"]) ? $_GET["artikel_id"] : "";
+$gebruiker_id = isset($_GET["gebruiker_id"]) ? $_GET["gebruiker_id"] : "";
 $gerecht_id = isset($_GET["gerecht_id"]) ? $_GET["gerecht_id"] : "";
 $action = isset($_GET["action"]) ? $_GET["action"] : "homepage";
 
@@ -40,10 +40,11 @@ switch ($action) {
 
         case "favoriet": {
                         $gebruiker_id = $_GET["gebruiker_id"];
+
                         if ($gerechtInfo->bepaalFavoriet($gerecht_id, $gebruiker_id)) {
                                 $gerechtInfo->verwijderFavoriet($gebruiker_id, $gerecht_id);
                         } else {
-                                $data = $gerechtInfo->addFavoriet($gerecht_id, $gebruiker_id);
+                                $gerechtInfo->addFavoriet($gerecht_id, $gebruiker_id);
                         }
 
                         header('Content-Type: application/json; charset=utf-8');
@@ -76,21 +77,24 @@ switch ($action) {
                 }
 
         case "boodschappenlijst": {
-                        $artikel_id = $_GET["artikel_id"];
-                        $gebruiker_id = $_GET["gebruiker_id"];
-                        $boodschappen ->selecteerBoodschappen($gebruiker_id);
-                        while($boodschappen->artikelOpLijst($artikel_id, $gebruiker_id)) {
-                                $boodschappen->addBoodschappen($gerecht_id, $gebruiker_id);
-                        }
+                        $boodschappen->addBoodschappen($gerecht_id, $gebruiker_id);
+                        $data = $boodschappen->selecteerBoodschappen($gebruiker_id);
+                        $totalePrijs = $boodschappen->addBoodschappen($gerecht_id, $gebruiker_id);
                         $template = 'boodschappenlijst.html.twig';
                         $title = 'boodschappenlijst';
                         break;
                 }
 
-
+        case "delete": {
+                        header('Content-Type: application/json; charset=utf-8');
+                        $gebruiker_id = $_GET["gebruiker_id"];
+                        $artikel_id = $_GET["artikel_id"];
+                        $boodschappen->verwijderArtikel($artikel_id, $gebruiker_id);
+                        exit();
+                }
 
 }
 
 $template = $twig->load($template);
 
-echo $template->render(["titel" => $title, "data" => $data]);
+echo $template->render(["titel" => $title, "data" => $data, "totalePrijs" => $totalePrijs]);

@@ -21,46 +21,45 @@ class Boodschappen
 
     public function selecteerBoodschappen($gebruiker_id)
     {
+        $sql = "
+            SELECT a.*, bl.* 
+            FROM boodschappenlijst AS bl
+            LEFT JOIN artikel AS a ON bl.artikel_id = a.id
+            WHERE bl.gebruiker_id = $gebruiker_id";
 
-        $sql = "SELECT * FROM boodschappenlijst WHERE gebruiker_id = $gebruiker_id";
         $result = mysqli_query($this->connection, $sql);
+
         $boodschappen = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         return $boodschappen;
     }
 
+
     public function artikelOpLijst($artikel_id, $gebruiker_id)
     {
 
         $boodschappen = $this->selecteerBoodschappen($gebruiker_id);
-
-        foreach ($boodschappen as $boodschap) {
-            if ($boodschap["artikel_id"] == $artikel_id) {
-                return $boodschap;
+        if ($boodschappen) {
+            foreach ($boodschappen as $boodschap) {
+                if ($boodschap["artikel_id"] == $artikel_id) {
+                    return $boodschap;
+                }
             }
         }
+
         return false;
     }
 
-    private function bijwerkenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheid)
+    public function berekenLijst($gebruiker_id)
     {
-        $bijwerken = $this->artikelOpLijst($artikel_id, $gebruiker_id);
-        
-        $nieuweHoeveelheid = ($bijwerken['hoeveelheid_ingredient'] + ($hoeveelheid)) / $bijwerken["hoeveelheid_verpakking"];
-        $nieuweHoeveelheid = ceil($nieuweHoeveelheid);
+        $boodschappen = $this->selecteerBoodschappen($gebruiker_id);
+        $prijsLijst = 0;
 
-        $sql = "UPDATE boodschappenlijst SET aantal_artikel = $nieuweHoeveelheid WHERE id = $bijwerken[id];";
-        $this->connection->query($sql);
-    }
+        foreach ($boodschappen as $boodschap) {
+            $prijsLijst += ($boodschap["prijs"] * $boodschap["aantal_artikel"] / 2);
+        }
 
-    private function toevoegenBoodschappen($artikel_id, $gebruiker_id, $nieuwAantal)
-    {
-        $toevoegen = $this->artikelOpLijst($artikel_id, $gebruiker_id);
-        $nieuwAantal = $toevoegen["hoeveelheid_ingredient"] / $toevoegen["hoeveelheid_verpakking"];
-        $nieuwAantal = ceil($nieuwAantal);
-
-        $sql = "INSERT INTO `boodschappenlijst`( `artikel_id`, `gebruiker_id`, `aantal_artikel`) VALUES ('$artikel_id','$gebruiker_id','$nieuwAantal');";
-        $this->connection->query($sql);
+        return $prijsLijst;
     }
 
     public function addBoodschappen($gerecht_id, $gebruiker_id)
@@ -70,12 +69,64 @@ class Boodschappen
 
         foreach ($ingredienten as $ingredient) {
             $artikel_id = $ingredient["artikel_id"];
-            $hoeveelheid = $ingredient["hoeveelheid"];
+            $hoeveelheidArtikel = $ingredient["hoeveelheid_verpakking"];
+            $hoeveelheidIngredient = $ingredient["hoeveelheid"];
+
             if ($this->artikelOpLijst($ingredient["artikel_id"], $gebruiker_id)) {
-                $this->bijwerkenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheid);
+                $this->bijwerkenBoodschappen($artikel_id, $gebruiker_id);
             } else {
-                $this->toevoegenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheid);
+                $this->toevoegenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheidArtikel, $hoeveelheidIngredient);
             }
         }
+        $totalePrijs = $this->berekenLijst($gebruiker_id);
+        return $totalePrijs;
     }
+
+    private function bijwerkenBoodschappen($artikel_id, $gebruiker_id)
+    {
+        $bijwerken = $this->artikelOpLijst($artikel_id, $gebruiker_id);
+
+
+        if ($bijwerken["aantal_artikel"] != 0) {
+            $aantalArtikel = $bijwerken['hoeveelheid_ingredient'] / $bijwerken["hoeveelheid_verpakking"] + $bijwerken["aantal_artikel"];
+            $aantalArtikel = ceil($aantalArtikel);
+
+            $sql = "UPDATE boodschappenlijst SET aantal_artikel = $aantalArtikel WHERE id = {$bijwerken['id']};";
+            $this->connection->query($sql);
+        } else {
+
+        }
+    }
+
+
+    private function toevoegenBoodschappen($artikel_id, $gebruiker_id, $hoeveelheidArtikel, $hoeveelheidIngredient)
+    {
+
+        $aantalArtikel = $hoeveelheidIngredient / $hoeveelheidArtikel;
+        $aantalArtikel = ceil($aantalArtikel);
+
+        $sql = "INSERT INTO `boodschappenlijst`( `artikel_id`, `gebruiker_id`, `hoeveelheid_ingredient`, `hoeveelheid_verpakking`,`aantal_artikel`) VALUES ('$artikel_id','$gebruiker_id','$hoeveelheidIngredient','$hoeveelheidArtikel','$aantalArtikel');";
+        $this->connection->query($sql);
+    }
+
+    public function verwijderArtikel($artikel_id, $gebruiker_id)
+    {
+        $artikel_id = mysqli_real_escape_string($this->connection, $artikel_id);
+        $gebruiker_id = mysqli_real_escape_string($this->connection, $gebruiker_id);
+
+        if ($artikel_id == "" && $gebruiker_id == "") {
+            $sql = "DELETE FROM boodschappenlijst";
+        } else {
+            $sql = "DELETE FROM boodschappenlijst WHERE id = '$artikel_id' AND gebruiker_id = '$gebruiker_id'";
+        }
+
+        if (mysqli_query($this->connection, $sql)) {
+            return true;
+        } else {
+
+            echo "Fout bij het uitvoeren van de query: " . mysqli_error($this->connection);
+            return false;
+        }
+    }
+
 }
